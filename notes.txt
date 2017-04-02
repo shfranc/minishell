@@ -1,0 +1,37 @@
+MINISHELL
+---------
+
+◦ malloc,free
+◦ access
+◦ open, close, read, write
+◦ opendir, readdir, closedir ◦ getcwd, chdir
+◦ stat, lstat, fstat
+◦ fork, execve :
+execve prend 3 param : chemin du programme a executer, tableau de chaine avec les arguments a passer au programme, l'environnement ou executer le programme.
+l'interet des fork c'est de pouvoir lancer plusieurs programme via de nouveau processus.
+un programme avec un processus init/lauched, le fork herite des carateristique du processus parent, valeur de retour, pid dans un sens, 0 dans l'autre.
+father = fork();
+les deux processus ecrivent dans la sortie standard.
+synchronisation des processus : wait(); --> le pere va attendre le fils.
+
+◦ wait, waitpid, wait3, wait4 ◦ signal, kill
+◦ exit
+
+- prompt = '$>' 1 ligne terminee par un \n. s'affiche de nouveau une fois la commande executee.
+- lignes de commande simples
+- executables : ceux de la variable PATH.
+- gestion des erreurs sans errno
+- gerer le path et l'environnement (char **environ systeme)
+- les builtins : echo, cd, setenv, unsetenv, env, exit.
+
+Tutorials :
+http://www.gnu.org/software/libc/manual/html_node/Implementing-a-Shell.html#Implementing-a-Shell
+- une structure 'process' 
+
+BONUS
+-----
+- gestion des signaux, notamment le ctrl C (variable globale autorisee)
+- gestion des droits d'execution dans le PATH
+- completion
+- separation des commandes avec le ;
+- ...
