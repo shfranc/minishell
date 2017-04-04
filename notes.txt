@@ -4,17 +4,12 @@ MINISHELL
 ◦ malloc,free
 ◦ access
 ◦ open, close, read, write
-◦ opendir, readdir, closedir ◦ getcwd, chdir
+◦ opendir, readdir, closedir
+◦ getcwd, chdir
 ◦ stat, lstat, fstat
-◦ fork, execve :
-execve prend 3 param : chemin du programme a executer, tableau de chaine avec les arguments a passer au programme, l'environnement ou executer le programme.
-l'interet des fork c'est de pouvoir lancer plusieurs programme via de nouveau processus.
-un programme avec un processus init/lauched, le fork herite des carateristique du processus parent, valeur de retour, pid dans un sens, 0 dans l'autre.
-father = fork();
-les deux processus ecrivent dans la sortie standard.
-synchronisation des processus : wait(); --> le pere va attendre le fils.
-
-◦ wait, waitpid, wait3, wait4 ◦ signal, kill
+◦ fork, execve
+◦ wait, waitpid, wait3, wait4
+◦ signal, kill
 ◦ exit
 
 - prompt = '$>' 1 ligne terminee par un \n. s'affiche de nouveau une fois la commande executee.
@@ -35,3 +30,64 @@ BONUS
 - completion
 - separation des commandes avec le ;
 - ...
+
+VIDEO
+-----
+execve prend 3 param : chemin du programme a executer, tableau de chaine avec les arguments a passer au programme, l'environnement ou executer le programme.
+l'interet des fork c'est de pouvoir lancer plusieurs programme via de nouveau processus.
+un programme avec un processus init/lauched, le fork herite des carateristique du processus parent, valeur de retour, pid dans un sens, 0 dans l'autre.
+father = fork();
+les deux processus ecrivent dans la sortie standard.
+synchronisation des processus : wait(); --> le pere va attendre le fils.
+
+◦ https://forum.intra.42.fr/topics/4158/messages/last https://forum.intra.42.fr/topics/4158/messages/last
+vairable env : un couple cle=valeur dans l'environnement.
+Pour env, comme pour les autres builtins qu'on te demande d'implémenter (quelque soit leur forme originelle, builtin ou binaire), tu dois reproduire les options. Cela inclut env -i par exemple.
+
+Shell Types:
+------------
+In UNIX there are two major types of shells:
+The Bourne shell. If you are using a Bourne-type shell, the default prompt is the $ character.
+The C shell. If you are using a C-type shell, the default prompt is the % character.
+
+There are again various subcategories for Bourne Shell which are listed as follows:
+Bourne shell (sh)
+Korn shell (ksh)
+Bourne Again shell (bash)
+POSIX shell (sh)
+
+The different C-type shells follow:
+C shell (csh)
+TENEX/TOPS C shell (tcsh)
+
+un ppt : https://view.officeapps.live.com/op/view.aspx?src=https://grid.cs.gsu.edu/~nmancuso1/files/csc3320/chapter4.ppt
+pour connaitre le shell : echo $SHELL
+sur les macs de l'ecole, csh est un hardlink vers tcsh
+bash est caps sensitive (shell != SHELL).
+env ls lance ls
+env affiche l'env.
+au demarrage, le shell peut lire un fichier startup (rc), affiche un prompt et attends une commande, quitte si ctrl D, sinon, execute la commande.
+\ continue la ligne sur csh ou bash.
+[e2r8p20:~] sfranc% ls \
+? -l
+bash-3.2$ ls \
+> -l
+le shell localise le programme en utilisant PATH ou a des commandes builtin (cd, echo).
+4 redirections : > >> < <<
+file substitution : *, ?, [...]
+'ls' == ls
+; sequence commands
+command substitution ` `
+echo today is `date`
+today is Mon Apr 3 16:27:15 CEST 2017
+variable : $HOME, $PATH $USER
+quote : only the outer quotes have any effect
+simple quote vs double auote : double auote "" inhibe * replacement vs simple auote inhibe *, variable substitution et commande substitution.
+if PATH is empty or not set, only the current working directory is searched for the executable.
+
+exit value : 0 mean success, 1 if fail
+$? ou status contient l'exit code de la derniere commande executee.
+umask value : $umask
+
+
+
