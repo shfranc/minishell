@@ -89,5 +89,26 @@ exit value : 0 mean success, 1 if fail
 $? ou status contient l'exit code de la derniere commande executee.
 umask value : $umask
 
+ENV
+---
+env est un programme : set environnement and execute command or print environnement.
+env sans argument affiche les variables d'environnement, dans tous les autres casm env lance une commande.
+Env execute une commande mais va forcément chercher dans le path pour les commandes et n'execute en aucun cas les builtin de notre shell.
+set des variables uniquement pour la commande a executer : env TOTO=TATA ls, uniquement pour ls.
+-i = inhibe/ignore l'env, env -i + commande n'affiche rien, l'env est vide.
+-P alpath : cherche la commande dans alpath plutot que dans PATH.
+-S string : split the given string into multiple strings. Ajouter plusieurs varaible d'env ?
+-u name if name existe, la supprimer avant d'executer la suite
+-v verbose
+parsing : env [OPTION] [name=value] [utility/command]
+enchainement de env : env -i env TOTO=TATA env TUTU=TITI env elle doit m'afficher l'environnement avec 2 variables : TOTO et TUTU.
+
+FORK
+----
+pid_t	fork(void);
+Upon successful completion, fork() returns a value of 0 to the child process and returns the proces ID of the child process to the parent process.  Otherwise, a value of -1 is returned to the parent process, no child process is created, and the global variable errno is set to indicate the error.
+
+
+
 
 
