@@ -1,3 +1,6 @@
 a.out
 minishell
 essais/a.out
+objs/*.o
+libft/objs/*.o
+libft/libft.a
