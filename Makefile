@@ -6,14 +6,17 @@
 #    By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 13:03:38 by sfranc            #+#    #+#              #
-#    Updated: 2017/04/18 16:44:52 by sfranc           ###   ########.fr        #
+#    Updated: 2017/04/19 18:35:29 by sfranc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 SRCS_PATH = srcs
 OBJS_PATH = objs
-SRCS = 	$(addprefix $(SRCS_PATH)/, main.c)
+SRCS = 	$(addprefix $(SRCS_PATH)/, main.c \
+		user_input.c \
+		builtin_exit.c \
+		list_minishell.c)
 OBJS =  $(SRCS:$(SRCS_PATH)/%.c=$(OBJS_PATH)/%.o)
 INCLUDES = includes ../libft/libft_gitperso/includes
 LIB = $(LIB_PATH)/libft.a
@@ -46,5 +49,10 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+git:
+	git add srcs/main.c
+	git commit -m "automatic commit"
+	git push
 
 .PHONY: clean fclean re

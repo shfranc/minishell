@@ -108,6 +108,62 @@ FORK
 pid_t	fork(void);
 Upon successful completion, fork() returns a value of 0 to the child process and returns the proces ID of the child process to the parent process.  Otherwise, a value of -1 is returned to the parent process, no child process is created, and the global variable errno is set to indicate the error.
 
+PROTO
+-----
+
+◦ malloc,free
+
+◦ access
+	int		access(const char *path, int amode);
+	check access permissions of a file or pathname.
+	R_OK for read permission, W_OK for write permission and X_OK for execute/search permission) or the existence test, F_OK.
+	If path cannot be found or if any of the desired access modes would not be granted, then a -1 value is returned
+
+◦ open, close, read, write
+
+◦ opendir, readdir, closedir
+
+◦ getcwd, chdir
+	char	*getcwd(char *buf, size_t size);
+	get working directory pathname.
+	The path argument points to the pathname of a directory.  The chdir() function causes the named directory to
+     become the current working directory.
+	Upon successful completion, a pointer to the pathname is returned.  Otherwise a NULL pointer is returned.
+
+	int	chdir(const char *path);
+	change current working directory.
+	Upon successful completion, a value of 0 is returned.  Otherwise, a value of -1.
+
+◦ stat, lstat, fstat
+
+◦ fork, execve
+	pid_t	fork(void);
+
+	int		execve(const char *path, char *const argv[], char *const envp[]);
+	The argument argv is a pointer to a null-terminated array of character pointers to null-terminated character strings. By custom, the first element should be the name of the executed program (for example, the last component of path).
+	The argument envp is also a pointer to a null-terminated array of character pointers to null-terminated strings.
+	If a program is setuid to a non-super-user, but is executed when the real uid is ``root'', then the program has some of the powers of a super-user as well.
+
+◦ wait, waitpid, wait3, wait4
+	pid_t	wait(int *stat_loc);
+
+◦ signal, kill
+	int	kill(pid_t pid, int sig);
+	Upon successful completion, a value of 0 is returned.  Otherwise, a value of -1.
+	send signal to a process
+	If pid is greater than zero:
+             Sig is sent to the process whose ID is equal to pid.
+
+     If pid is zero:
+             Sig is sent to all processes whose group ID is equal to the process group ID of the sender,
+             and for which the process has permission; this is a variant of killpg(2).
+
+     If pid is -1: (...)
+
+◦ exit
+
+
+
 
 
 

@@ -6,86 +6,114 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 09:55:07 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/19 09:30:52 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/19 18:54:49 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// sans multicommand
+
 int		main(void)
 {
 	char	*line;
-	t_user	user;
-	t_list	*elem;
-	t_list	*to_do;
 	char	**input;
-	char	**temp;
-	t_list	*tmp;
-	// char	**user;
-	// char	*user_command;
-	// int		ret;
+	int		status;
+	pid_t	new;
 
-	ft_putstr("$> ");
-	ft_putnbr_endl(get_next_line(0, &line));
-		// ft_exit("test", 0);
-	input = ft_strsplit(line, ';');
-	if (!input)
-		return (1);
-	ft_puttab(input);
-	to_do = NULL;
-	temp = input;
-	while (*temp)
+	while (1)
 	{
-		user.command = ft_strsplit(*temp, ' ');
-		user.path = ft_strdup(*user.command);
-		user.status = 0;
-		elem = ft_lstnew(&user, sizeof(user));
-		// ft_lstadd_last(&to_do, elem);
-		temp++;
+		status = 0;
+		ft_putstr("$> ");
+		get_next_line(0, &line);
+		// parsing
+
+		input = read_userinput(&line);
+		if (!input)
+			continue ;
+		
+		// start : buildin ou commande ?
+		if (ft_strequ(*input, "exit"))
+			builtin_exit(status);
+
+		// execution
+		if ((new = fork()) == -1)
+			ft_exit("Fork failed", 1);
+		else if (new == 0)
+		{
+			ft_putendl("-----------");
+			status = execve(*input, input, NULL);
+			ft_putnbr_endl(status);
+		}
+		else
+		{
+			wait(0);
+			ft_putnbr_endl(status);
+			ft_putendl("fin");
+		}
+		
+		// verif si mauvais parsing
+		if (status == -1)
+			ft_exit("Kill ghost processus", 1);
+
+		ft_freetab(&input);
+		ft_strdel(&line);
 	}
-
-	tmp = to_do;
-	while (tmp)
-	{
-		ft_putendl("---------");
-		ft_putendl(((t_user*)(tmp->content))->path);
-		ft_puttab(((t_user*)(tmp->content))->command);
-		ft_putnbr_endl(((t_user*)(tmp->content))->status);
-		tmp=tmp->next;
-	}
-
-
-	
-
-	// ft_putendl(to_do->content.user.command);
-
-	// while (to_do)
-	// {
-	// 	ft_putendl(to_do->content.user.command);
-	// 	to_do = to_do->next;
-	// }
-
-	// ft_putstr("$> ");
-
-	// ft_puttab(tab);
-
-	// user = ft_strsplit(*tab, ' ');
-	
-	// ft_puttab(user);
-
-	// user_command = *user;
-	// *user = ft_strrchr(*user, '/') + 1;
-	// ft_putstr("command : ");
-	
-	// ft_putstr("arguments : ");
-	
-
-	// ft_putendl("-----------");
-	
-	// ret = execve(user_command, user, NULL);
-
-	// ft_putnbr_endl(ret);
-	// ft_putendl("fin");
-
 	return (0);
 }
+
+// avec multicommand -- version bof, pas de boucle inf
+
+// int		main(void)
+// {
+// 	char	*line;
+// 	char	**input;
+// 	char	**tab;
+// 	char	**temp;
+// 	t_com	*user;
+// 	t_com	*elem;
+// 	int		status;
+// 	pid_t	new;
+
+// 	ft_putstr("$> ");
+// 	ft_putnbr_endl(get_next_line(0, &line));
+
+// 	input = ft_strsplit(line, ';');
+// 	if (!input)
+// 		return (1);
+// 	ft_puttab(input);
+
+// 	temp = input;
+// 	while (*temp)
+// 	{
+// 		tab = ft_strsplit(*temp, ' ');
+// 		elem = sh_lstnew(tab);
+// 		sh_lstaddlast(&user, elem);
+// 		free(tab);
+// 		temp++;
+// 	}
+	
+// 	status = 0;
+
+// 	while (user)
+// 	{
+// 		if ((new = fork()) == -1)
+// 			ft_exit("Fork failed", 1);
+// 		else if (new == 0)
+// 		{
+// 			ft_putendl("-----------");
+// 			status = execve(user->path, user->command, NULL);
+// 			ft_putnbr_endl(status);
+
+// 		}
+// 		else
+// 		{
+// 			wait(0);
+// 			ft_putendl(user->path);
+// 			ft_putnbr_endl(status);
+// 			ft_putendl("fin");
+// 		}
+// 		user = user->next;
+// 	}
+// 	return (0);
+// }
