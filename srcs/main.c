@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 09:55:07 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/19 18:54:49 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/20 10:41:41 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 int		main(void)
 {
 	char	*line;
-	char	**input;
+	t_com	*input;
 	int		status;
 	pid_t	new;
 
@@ -33,7 +33,7 @@ int		main(void)
 			continue ;
 		
 		// start : buildin ou commande ?
-		if (ft_strequ(*input, "exit"))
+		if ((input->builtin & EXIT) == 0)
 			builtin_exit(status);
 
 		// execution
@@ -42,7 +42,7 @@ int		main(void)
 		else if (new == 0)
 		{
 			ft_putendl("-----------");
-			status = execve(*input, input, NULL);
+			status = execve(input->path, input->command, NULL);
 			ft_putnbr_endl(status);
 		}
 		else
@@ -56,7 +56,7 @@ int		main(void)
 		if (status == -1)
 			ft_exit("Kill ghost processus", 1);
 
-		ft_freetab(&input);
+		// ft_freetab(&input);
 		ft_strdel(&line);
 	}
 	return (0);
