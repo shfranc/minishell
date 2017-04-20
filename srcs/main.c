@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 09:55:07 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/20 10:41:41 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/20 17:17:42 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,21 @@ int		main(void)
 			continue ;
 		
 		// start : buildin ou commande ?
-		if ((input->builtin & EXIT) == 0)
-			builtin_exit(status);
+		if (input->builtin == CD)
+			ft_putendl("---> cd a venir");
+		else if (input->builtin == ECHO)
+			builtin_echo(input);
+		else if (input->builtin == ENV)
+			ft_putendl("---> env a venir");
+		else if (input->builtin == EXIT)
+			builtin_exit(input);
+		else if (input->builtin == SETENV)
+			ft_putendl("---> setenv a venir");
+		else if (input->builtin == UNSETENV)
+			ft_putendl("---> unsetenv a venir");
 
 		// execution
-		if ((new = fork()) == -1)
+		else if ((new = fork()) == -1)
 			ft_exit("Fork failed", 1);
 		else if (new == 0)
 		{

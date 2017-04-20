@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 18:32:27 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/20 10:32:13 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/20 17:20:55 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_com 	*read_userinput(char **line)
 
 	ft_putstr(*line);
 	ft_putendl("*");
+	// remplacer tous les '\t' ou '\n' par des ' ' pour n'avoir qu'un split a faire
 
 	input = ft_strsplit(*line, ' ');
 
@@ -49,8 +50,12 @@ t_com 	*read_userinput(char **line)
 
 	is_builtin(elem);
 	printbit(elem->builtin);
-	// if (access(*input, F_OK) == -1)
-	// 	perror(strerror(errno));
+	
+	if (!elem->builtin && access(*input, F_OK) == -1)
+	{
+		ft_putstr("==> ");
+		perror(strerror(errno));
+	}
 
 	return (elem);
 }

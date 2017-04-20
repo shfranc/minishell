@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 10:07:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/20 10:41:49 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/20 16:15:12 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,25 @@ typedef struct	s_command
 				t_com;
 
 /*
-** Listes minishell
+**	Listes minishell
 */
 t_com	*sh_lstnew(char **tab);
 void	sh_lstaddlast(t_com **head, t_com *new);
 void	sh_lstdel(t_com **head);
 
 /*
-** Built-in exit
+**	Built-in echo
 */
-void	builtin_exit(int status);
+void	builtin_echo(t_com *input);
+
+/*
+**	Built-in exit
+*/
+void	builtin_exit(t_com	*input);
 
 
 /*
-** read user input
+**	Read user input
 */
 t_com 	*read_userinput(char **line);
 void	is_builtin(t_com *elem);

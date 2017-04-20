@@ -6,7 +6,7 @@
 #    By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 13:03:38 by sfranc            #+#    #+#              #
-#    Updated: 2017/04/20 12:55:47 by sfranc           ###   ########.fr        #
+#    Updated: 2017/04/20 16:11:48 by sfranc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ SRCS_PATH = srcs
 OBJS_PATH = objs
 SRCS = 	$(addprefix $(SRCS_PATH)/, main.c \
 		user_input.c \
+		builtin_echo.c \
 		builtin_exit.c \
 		list_minishell.c)
 OBJS =  $(SRCS:$(SRCS_PATH)/%.c=$(OBJS_PATH)/%.o)
