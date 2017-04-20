@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 10:07:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/19 18:54:06 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/20 10:41:49 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,24 @@
 # include <sys/wait.h>
 # include <signal.h>
 
-# define ERROR "Error"
+
+# define CD			1
+# define ECHO		1 << 1
+# define ENV		1 << 2
+# define EXIT		1 << 3
+# define SETENV 	1 << 4
+# define UNSETENV	1 << 5
 
 typedef struct	s_command
 {
 	char				*path;
 	char				**command;
+	int					builtin;
 	int					error;
 	char				*status;
 	struct s_command	*next;
-}				t_com;
+}
+				t_com;
 
 /*
 ** Listes minishell
@@ -40,9 +48,11 @@ void	sh_lstdel(t_com **head);
 */
 void	builtin_exit(int status);
 
+
 /*
 ** read user input
 */
-char 	**read_userinput(char **line);
+t_com 	*read_userinput(char **line);
+void	is_builtin(t_com *elem);
 
 #endif
