@@ -6,14 +6,18 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 18:32:27 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/19 19:14:08 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/20 10:32:13 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char **read_userinput(char **line)
+#include <errno.h>
+#include <stdio.h>
+
+t_com 	*read_userinput(char **line)
 {
+	t_com	*elem;
 	char	**input;
 	char	*temp;
 	int		i;
@@ -41,5 +45,26 @@ char **read_userinput(char **line)
 	ft_puttab(input);
 	ft_putendl("**");
 
-	return (input);
+	elem = sh_lstnew(input);
+
+	is_builtin(elem);
+	printbit(elem->builtin);
+	// if (access(*input, F_OK) == -1)
+	// 	perror(strerror(errno));
+
+	return (elem);
+}
+
+void	is_builtin(t_com *elem)
+{
+	static char	*builtin[6] = {"cd", "echo", "env", "exit", "setenv", "unsetenv"};
+	int			i;
+
+	i = 0;
+	while (builtin[i])
+	{
+		if (ft_strequ(elem->path, builtin[i]))
+			elem->builtin = 1 << i;
+		++i;
+	}
 }

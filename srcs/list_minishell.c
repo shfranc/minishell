@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 09:51:41 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/19 14:50:12 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/20 10:26:31 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_com	*sh_lstnew(char **tab)
 	ft_puttab(elem->command);
 
 	elem->error = 0;
+	elem->builtin = 0;
 	elem->status = NULL;
 	elem->next = NULL;
 	return (elem);
