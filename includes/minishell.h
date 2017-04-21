@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 10:07:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/21 13:09:41 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/21 16:14:21 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ void	builtin_echo(t_com *input);
 /*
 **	Built-in exit
 */
-void	save_env(char ***environ, char ***env);
+char	**save_env(char ***environ);
+void	builtin_env(t_com *input, char **env);
 
 /*
 **	Built-in exit

@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 09:55:07 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/21 13:09:25 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/21 16:15:38 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,9 @@ int		main(int ac, char **av, char **environ)
 
 	(void)ac;
 	(void)av;
-	(void)environ;
-	(void)env;
 	
-	env = NULL;
 	// copier l'env pour pouvoir le modifier
-	// ft_puttab(environ);
-	save_env(&environ, &env);
+	env = save_env(&environ);
 
 	while (1)
 	{
@@ -49,7 +45,7 @@ int		main(int ac, char **av, char **environ)
 		else if (input->builtin == ECHO)
 			builtin_echo(input);
 		else if (input->builtin == ENV)
-			ft_putendl("---> env a venir");
+			builtin_env(input, env);
 		else if (input->builtin == EXIT)
 			builtin_exit(input);
 		else if (input->builtin == SETENV)
@@ -63,7 +59,7 @@ int		main(int ac, char **av, char **environ)
 		else if (new == 0)
 		{
 			ft_putendl("-----------");
-			status = execve(input->path, input->command, NULL);
+			status = execve(input->path, input->command, env);
 			ft_putnbr_endl(status);
 		}
 		else
