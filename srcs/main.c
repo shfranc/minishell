@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 09:55:07 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/20 17:17:42 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/21 13:09:25 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,23 @@
 
 // sans multicommand
 
-int		main(void)
+int		main(int ac, char **av, char **environ)
 {
 	char	*line;
 	t_com	*input;
 	int		status;
 	pid_t	new;
+	char	**env;
+
+	(void)ac;
+	(void)av;
+	(void)environ;
+	(void)env;
+	
+	env = NULL;
+	// copier l'env pour pouvoir le modifier
+	// ft_puttab(environ);
+	save_env(&environ, &env);
 
 	while (1)
 	{
