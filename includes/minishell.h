@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 10:07:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/21 16:14:21 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/24 17:59:19 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,29 @@ void	sh_lstdel(t_com **head);
 void	builtin_echo(t_com *input);
 
 /*
-**	Built-in exit
+**	Built-in env
 */
-char	**save_env(char ***environ);
-void	builtin_env(t_com *input, char **env);
+void	builtin_env(t_com *input, char ***env);
 
 /*
 **	Built-in exit
 */
 void	builtin_exit(t_com	*input);
+
+/*
+**	Built-in setenv
+*/
+void	builtin_setenv(t_com *input, char ***env);
+int		parsing_setenv(t_com *input, char **temp);
+int		modify_variable(char *name, char ***env);
+void	adding_variable(char *name, char ***env);
+
+/*
+**	Built-in unsetenv
+*/
+void	builtin_unsetenv(t_com *input, char ***env);
+int		count_var_suppr(t_com *input, char ***env);
+int		check_var_suppr(t_com *input, char *env);
 
 /*
 **	Read user input

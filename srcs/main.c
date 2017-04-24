@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 09:55:07 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/21 16:15:38 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/24 17:55:02 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int		main(int ac, char **av, char **environ)
 	(void)av;
 	
 	// copier l'env pour pouvoir le modifier
-	env = save_env(&environ);
+	if (!(env = ft_tabdup(environ)))
+		ft_exit("unable to malloc env", 1);
 
 	while (1)
 	{
@@ -36,6 +37,7 @@ int		main(int ac, char **av, char **environ)
 		// parsing
 
 		input = read_userinput(&line);
+		ft_strdel(&line);		
 		if (!input)
 			continue ;
 		
@@ -45,13 +47,13 @@ int		main(int ac, char **av, char **environ)
 		else if (input->builtin == ECHO)
 			builtin_echo(input);
 		else if (input->builtin == ENV)
-			builtin_env(input, env);
+			builtin_env(input, &env);
 		else if (input->builtin == EXIT)
 			builtin_exit(input);
 		else if (input->builtin == SETENV)
-			ft_putendl("---> setenv a venir");
+			builtin_setenv(input, &env);
 		else if (input->builtin == UNSETENV)
-			ft_putendl("---> unsetenv a venir");
+			builtin_unsetenv(input, &env);
 
 		// execution
 		else if ((new = fork()) == -1)
@@ -73,8 +75,10 @@ int		main(int ac, char **av, char **environ)
 		if (status == -1)
 			ft_exit("Kill ghost processus", 1);
 
+		sh_lstdel(&input);
+
 		// ft_freetab(&input);
-		ft_strdel(&line);
+
 	}
 	return (0);
 }

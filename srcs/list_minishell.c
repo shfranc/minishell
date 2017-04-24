@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 09:51:41 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/20 17:08:24 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/24 17:58:22 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,12 @@ t_com	*sh_lstnew(char **tab)
 
 	if (!(elem = (t_com*)malloc(sizeof(t_com))))
 		return (NULL);
-	elem->path = *tab;
-	elem->command = tab;
+	elem->path = ft_strdup(*tab);
+	ft_putendl(elem->path);
+
+	elem->command = ft_tabdup(tab);
+	ft_puttab(elem->command);
+	ft_putendl("--- lst ---");
 	elem->error = 0;
 	elem->builtin = 0;
 	elem->status = NULL;
@@ -51,7 +55,7 @@ void	sh_lstdel(t_com **head)
 		while (*head)
 		{
 			free((*head)->path);
-			free((*head)->command);
+			ft_freetab(&(*head)->command); // ne free pas un tableau...
 			free(*head);
 			*head = (*head)->next;
 		}

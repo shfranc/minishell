@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 18:32:27 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/20 17:20:55 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/24 18:10:23 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ t_com 	*read_userinput(char **line)
 
 	ft_putstr(*line);
 	ft_putendl("*");
-	// remplacer tous les '\t' ou '\n' par des ' ' pour n'avoir qu'un split a faire
 
 	input = ft_strsplit(*line, ' ');
 
@@ -48,8 +47,10 @@ t_com 	*read_userinput(char **line)
 
 	elem = sh_lstnew(input);
 
+	// ft_freetab(&input);
+	
 	is_builtin(elem);
-	printbit(elem->builtin);
+	// printbit(elem->builtin);
 	
 	if (!elem->builtin && access(*input, F_OK) == -1)
 	{
@@ -62,11 +63,18 @@ t_com 	*read_userinput(char **line)
 
 void	is_builtin(t_com *elem)
 {
-	static char	*builtin[6] = {"cd", "echo", "env", "exit", "setenv", "unsetenv"};
+	static char	*builtin;
+	// [6] = {"cd", "echo", "env", "exit", "setenv", "unsetenv"};
 	int			i;
 
+	(builtin + 0) = ft_strdup("cd");
+	builtin[1] = ft_strdup("echo");
+	builtin[2] = ft_strdup("env");
+	builtin[3] = ft_strdup("exit");
+	builtin[4] = ft_strdup("setenv");
+	builtin[5] = ft_strdup("unsetenv");
 	i = 0;
-	while (builtin[i])
+	while (*(builtin = i))
 	{
 		if (ft_strequ(elem->path, builtin[i]))
 			elem->builtin = 1 << i;
