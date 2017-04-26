@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 10:07:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/26 12:16:08 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/26 19:26:31 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,25 @@ typedef struct	s_command
 */
 t_com 	*read_userinput(char *line);
 char	**split_command(char *s);
-void	ft_addtotab(char ***tab, char *add);
+int 	move_endofcommand(char *s);
+int		beginwith_semicolon(char *s);
+int		check_semicolon(int check, char ***command);
+
+/*
+**	Parse command
+*/
+t_com 	*parse_command(char **command);
+char	**split_intoarg(char *s);
+int		check_commandblank(char **command);
+int		check_quotes(char **command);
 void	is_builtin(t_com *elem);
+
+/*
+**	Parse command 2
+*/
+char	*strsub_withoutquotes(char *s, int len);
+int		move_endofarg(char *s);
+int		nb_quotes(char *s, int len);
 
 /*
 **	Built-in echo
@@ -65,7 +82,7 @@ void	builtin_exit(t_com	*input);
 void	builtin_setenv(t_com *input, char ***env);
 int		parsing_setenv(t_com *input, char **temp);
 int		modify_variable(char *name, char ***env);
-void	adding_variable(char *name, char ***env);
+// void	adding_variable(char *name, char ***env);
 
 /*
 **	Built-in unsetenv
@@ -75,7 +92,7 @@ int		count_var_suppr(t_com *input, char ***env);
 int		check_var_suppr(t_com *input, char *env);
 
 /*
-**	Listes minishell
+**	Lists minishell
 */
 t_com	*sh_lstnew(char **tab);
 void	sh_lstaddlast(t_com **head, t_com *new);

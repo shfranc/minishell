@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/24 09:32:52 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/25 10:33:32 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/26 18:28:02 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ void	builtin_unsetenv(t_com *input, char ***env)
 	while (*(*env + j) && i < len)
 	{
 		if (check_var_suppr(input, *(*env + j)))
+		{
+			free(*(*env + j));
 			j++;
+		}
 		else
 			*(new + i++) = *(*env + j++);
 	}
