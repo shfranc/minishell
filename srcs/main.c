@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 09:55:07 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/24 17:55:02 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/26 12:23:00 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,13 @@ int		main(int ac, char **av, char **environ)
 		get_next_line(0, &line);
 		// parsing
 
-		input = read_userinput(&line);
-		ft_strdel(&line);		
+		input = read_userinput(line);
+		
+		ft_strdel(&line);
+		
 		if (!input)
 			continue ;
-		
+		ft_putendl("LOL");
 		// start : buildin ou commande ?
 		if (input->builtin == CD)
 			ft_putendl("---> cd a venir");

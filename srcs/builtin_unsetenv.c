@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/24 09:32:52 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/24 17:16:11 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/25 10:33:32 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	builtin_unsetenv(t_com *input, char ***env)
 	int		j;
 
 	len = count_var_suppr(input, env);
-	if (!(new = (char**)malloc(sizeof(char*) * len + 1)))
+	if (!(new = (char**)malloc(sizeof(char*) * (len + 1))))
 		ft_exit("Unable to malloc env", 1);
 	*(new + len) = 0;
 	i = 0;
