@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 09:55:07 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/27 11:13:19 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/27 15:30:16 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,33 +59,31 @@ int		main(int ac, char **av, char **environ)
 				builtin_setenv(todo, &env);
 			else if (todo->builtin == UNSETENV)
 				builtin_unsetenv(todo, &env);
-
 			// execution
-			else if ((new = fork()) == -1)
-				ft_exit("Fork failed", 1);
-			else if (new == 0)
+			else if (check_path(todo, env))
 			{
-				if (check_path(todo, env))
+				if ((new = fork()) == -1)
+					ft_exit("Fork failed", 1);
+				else if (new == 0)
 				{
 					ft_putendl("-----------");
 					status = execve(todo->path, todo->command, env);
 					ft_putnbr_endl(status);
 				}
+				else
+				{
+					wait(0);
+					ft_putnbr_endl(status);
+					ft_putendl("fin");
+				}
 			}
-			else
-			{
-				wait(0);
-				ft_putnbr_endl(status);
-				ft_putendl("fin");
-			}
-			
+
 			// verif si mauvais parsing
 			if (status == -1)
 				ft_exit("Kill ghost processus", 1);
 			todo=todo->next;
 		}
 		sh_lstdel(&start);
-
 	}
 	return (0);
 }

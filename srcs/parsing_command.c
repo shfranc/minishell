@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 14:56:40 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/27 12:37:41 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/27 15:33:32 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_com 	*parse_command(char **command)
 
 	if ((check_quotes(command)))
 	{
-		ft_putendl_fd("minishell: missing closing quote \"", 2);
+		ft_putendl_fd("minishell: missing closing quote `\"'", 2);
 		ft_freetab(&command);
 		return(NULL);
 	}

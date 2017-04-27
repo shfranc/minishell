@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/27 10:41:23 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/27 13:02:28 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/27 15:52:53 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,20 @@
 
 int	check_path(t_com *input, char **env)
 {
-	char 			**path;
+	char			**path;
 	char			*test;
-	char 			*temp;
+	char			*temp;
 	int				i;
 	struct stat 	l_stat;
 	int				ret;
 
 	(void)env;
+
+	if (!*input->path)
+	{
+		display_command_error(input);
+		return (0);
+	}
 
 	if (access(input->path, F_OK) == 0)
 	{
@@ -31,6 +37,13 @@ int	check_path(t_com *input, char **env)
 		if (S_ISDIR(l_stat.st_mode))
 		{
 			ft_putendl("is directory");
+			return (0);
+		}
+		if (access(input->path, X_OK) == 0)
+			return (1);
+		else
+		{
+			ft_putendl("Permission denied");
 			return (0);
 		}
 		return (1);
@@ -51,7 +64,13 @@ int	check_path(t_com *input, char **env)
 				input->path = ft_strdup(test);
 				free(temp);
 				free(test);
-				return (1);
+				if (access(input->path, X_OK) == 0)
+					return (1);
+				else
+				{
+					ft_putendl("Permission denied");
+					return (0);
+				}
 			}
 			else
 			{
