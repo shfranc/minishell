@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 14:56:40 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/26 19:25:36 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/27 12:37:41 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ t_com 	*parse_command(char **command)
 		ft_freetab(&wip);
 		is_builtin(elem);
 
-		ft_puttab(elem->command);
-		ft_putendl("****");
+		// ft_puttab(elem->command);
+		// ft_putendl("****");
 
 		sh_lstaddlast(&todo, elem);
 		i++;

@@ -6,7 +6,7 @@
 #    By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 13:03:38 by sfranc            #+#    #+#              #
-#    Updated: 2017/04/26 19:28:28 by sfranc           ###   ########.fr        #
+#    Updated: 2017/04/27 11:18:20 by sfranc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ SRCS = 	$(addprefix $(SRCS_PATH)/, main.c \
 		user_input.c \
 		parsing_command.c \
 		parsing_command2.c \
+		execution.c \
 		builtin_echo.c \
 		builtin_env.c \
 		builtin_exit.c \
@@ -29,8 +30,8 @@ LIB = $(LIB_PATH)/libft.a
 LIB_PATH = ../libft/libft_gitperso
 # LIB_PATH = ./libft
 CC = gcc
-# FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+# FLAGS = -Wall -Wextra -Werror
 # GREEN = \033[01;32m
 # YELLOW = \033[01;33m
 # CYAN = \033[01;36m

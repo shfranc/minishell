@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 09:55:07 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/26 19:32:59 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/27 11:13:19 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,12 @@ int		main(int ac, char **av, char **environ)
 				ft_exit("Fork failed", 1);
 			else if (new == 0)
 			{
-				ft_putendl("-----------");
-				status = execve(todo->path, todo->command, env);
-				ft_putnbr_endl(status);
+				if (check_path(todo, env))
+				{
+					ft_putendl("-----------");
+					status = execve(todo->path, todo->command, env);
+					ft_putnbr_endl(status);
+				}
 			}
 			else
 			{

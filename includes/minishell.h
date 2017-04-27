@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 10:07:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/26 19:26:31 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/27 12:48:49 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "libft.h"
 # include <sys/wait.h>
 # include <signal.h>
+#include <sys/stat.h>
 
 
 # define CD			1
@@ -60,6 +61,13 @@ void	is_builtin(t_com *elem);
 char	*strsub_withoutquotes(char *s, int len);
 int		move_endofarg(char *s);
 int		nb_quotes(char *s, int len);
+
+/*
+**	Execution
+*/
+int		check_path(t_com *input, char **env);
+char	**get_path_variable(char **env);
+void	display_command_error(t_com *input);
 
 /*
 **	Built-in echo
