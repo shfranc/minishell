@@ -6,7 +6,7 @@
 #    By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 13:03:38 by sfranc            #+#    #+#              #
-#    Updated: 2017/04/27 18:53:36 by sfranc           ###   ########.fr        #
+#    Updated: 2017/04/27 18:59:00 by sfranc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,8 +59,10 @@ fclean: clean
 re: fclean all
 
 git:
+	git status
 	git add $(SRCS) Makefile includes/minishell.h
 	git commit -m "automatic commit"
 	git push
+	git status
 
 .PHONY: clean fclean re
