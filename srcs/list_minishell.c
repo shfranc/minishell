@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 09:51:41 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/27 18:53:05 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/28 12:03:46 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ t_com	*sh_lstnew(char **tab)
 	// ft_puttab(elem->command);
 	// ft_putendl("--- lst ---");
 
-	elem->error = 0;
+	// elem->error = 0;
 	elem->builtin = 0;
-	elem->status = NULL;
+	// elem->status = NULL;
 	elem->next = NULL;
 	return (elem);
 }
@@ -53,7 +53,6 @@ void	sh_lstaddlast(t_com **head, t_com *new)
 
 void	sh_lstdel(t_com **head)
 {
-
 	if (!head)
 		return;
 	while ((*head)->next)

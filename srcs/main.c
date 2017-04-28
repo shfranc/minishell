@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 09:55:07 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/27 18:57:18 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/28 16:55:03 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,20 @@ int		main(int ac, char **av, char **environ)
 	// copier l'env pour pouvoir le modifier
 	if (!(env = ft_tabdup(environ)))
 		ft_exit("unable to malloc env", 1);
-
+	line = NULL;
 	while (1)
 	{
 		status = 0;
 		ft_putstr("$> ");
-		get_next_line(0, &line);
+		if (get_next_line(0, &line) != 1)
+			ft_exit("GNL error", 1);
 		// parsing
+
 
 		todo = read_userinput(line);
 		
 		ft_strdel(&line);
-		ft_putnbr_endl(sizeof(*todo));
+
 		if (!todo)
 			continue ;
 		// start : buildin ou commande ?
@@ -85,6 +87,7 @@ int		main(int ac, char **av, char **environ)
 		}
 		sh_lstdel(&start);
 	}
+	// free(line);
 	return (0);
 }
 

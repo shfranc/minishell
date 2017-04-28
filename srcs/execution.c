@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/27 10:41:23 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/27 15:52:53 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/28 12:25:32 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,14 @@ int	check_path(t_com *input, char **env)
 				free(temp);
 				free(test);
 				if (access(input->path, X_OK) == 0)
+				{
+					ft_freetab(&path);
 					return (1);
+				}
 				else
 				{
 					ft_putendl("Permission denied");
+					ft_freetab(&path);
 					return (0);
 				}
 			}
@@ -80,9 +84,8 @@ int	check_path(t_com *input, char **env)
 		}
 		if (i == ft_tablen(path))
 			display_command_error(input);
-		free(path);
+		ft_freetab(&path);
 	}
-	
 	return (0);
 }
 

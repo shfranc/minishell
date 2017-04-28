@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/24 09:32:52 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/26 18:28:02 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/28 17:39:05 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,19 @@ void	builtin_unsetenv(t_com *input, char ***env)
 	{
 		if (check_var_suppr(input, *(*env + j)))
 		{
+			ft_putendl(*(*env + j));
 			free(*(*env + j));
 			j++;
 		}
 		else
 			*(new + i++) = *(*env + j++);
 	}
+	if (*(*env + j) && ft_strequ(*(new + i), *(*env + j)))
+	{
+		ft_putendl("free la derniere ligne");
+		free(*(*env + j));
+	}
+	// ft_putendl(*(*env + j));
 	old = *env;
 	*env = new;
 	free(old);
@@ -43,6 +50,7 @@ void	builtin_unsetenv(t_com *input, char ***env)
 
 int		count_var_suppr(t_com *input, char ***env)
 {
+	char *temp;
 	int	len;
 	int	i;
 	int	j;
@@ -54,9 +62,10 @@ int		count_var_suppr(t_com *input, char ***env)
 		j = 0;
 		while (*(*env + j))
 		{
-			if ((ft_strncmp(input->command[i], *(*env + j),\
-				ft_strchr(*(*env + j), '=') - *(*env + j))) == 0)
+			temp = ft_strsub(*(*env + j), 0, ft_strchr(*(*env + j), '=') - *(*env + j));
+			if(ft_strequ(temp, input->command[i]))
 				len--;
+			free(temp);
 			j++;
 		}
 		i++;
@@ -66,14 +75,19 @@ int		count_var_suppr(t_com *input, char ***env)
 
 int		check_var_suppr(t_com *input, char *env)
 {
+	char *temp;
 	int	i;
 
 	i = 1;
 	while (input->command[i])
 	{
-		if ((ft_strncmp(input->command[i], env,\
-			ft_strchr(env, '=') - env)) == 0)
+		temp = ft_strsub(env, 0, ft_strchr(env, '=') - env);
+		if(ft_strequ(temp, input->command[i]))
+		{
+			free(temp);
 			return (1);
+		}
+		free(temp);
 		i++;
 	}
 	return (0);

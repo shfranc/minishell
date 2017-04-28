@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 10:07:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/27 12:48:49 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/04/28 12:01:50 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ typedef struct	s_command
 	char				*path;
 	char				**command;
 	int					builtin;
-	int					error;
-	char				*status;
+	// int					error;
+	// char				*status;
 	struct s_command	*next;
 }
 				t_com;
@@ -77,7 +77,7 @@ void	builtin_echo(t_com *input);
 /*
 **	Built-in env
 */
-void	builtin_env(t_com *input, char ***env);
+void	builtin_env(t_com *vinput, char ***env);
 
 /*
 **	Built-in exit
