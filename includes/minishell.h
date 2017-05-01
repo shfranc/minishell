@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 10:07:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/28 12:01:50 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/01 19:24:47 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,11 @@ int		nb_quotes(char *s, int len);
 /*
 **	Execution
 */
-int		check_path(t_com *input, char **env);
+int		launch_command(t_com *input, char **env);
+int 	check_existing_path(t_com *input);
+void	search_through_path(t_com *input, char **path, char **error);
 char	**get_path_variable(char **env);
-void	display_command_error(t_com *input);
+int		display_cmd_err(t_com *input, char *error);
 
 /*
 **	Built-in echo

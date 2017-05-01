@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 09:55:07 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/28 16:55:03 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/01 16:46:05 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int		main(int ac, char **av, char **environ)
 			else if (todo->builtin == UNSETENV)
 				builtin_unsetenv(todo, &env);
 			// execution
-			else if (check_path(todo, env))
+			else if (launch_command(todo, env))
 			{
 				if ((new = fork()) == -1)
 					ft_exit("Fork failed", 1);
