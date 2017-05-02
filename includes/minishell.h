@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 10:07:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/01 19:24:47 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/02 13:40:46 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 # include "libft.h"
 # include <sys/wait.h>
 # include <signal.h>
-#include <sys/stat.h>
-
+# include <sys/stat.h>
 
 # define CD			1
 # define ECHO		1 << 1
@@ -31,8 +30,6 @@ typedef struct	s_command
 	char				*path;
 	char				**command;
 	int					builtin;
-	// int					error;
-	// char				*status;
 	struct s_command	*next;
 }
 				t_com;
@@ -72,30 +69,38 @@ char	**get_path_variable(char **env);
 int		display_cmd_err(t_com *input, char *error);
 
 /*
-**	Built-in echo
+**	Bluitin cd
+*/
+void	builtin_cd(t_com *input, char ***env);
+void 	move_to_home(char ***env);
+void	change_pwd(char **pwd, char ***env);
+void	change_oldpwd(char **old_pwd, char ***env);
+char	*get_env_variable(char **env, char *var);
+
+/*
+**	Bluitin echo
 */
 void	builtin_echo(t_com *input);
 
 /*
-**	Built-in env
+**	Bluitin env
 */
 void	builtin_env(t_com *vinput, char ***env);
 
 /*
-**	Built-in exit
+**	Bluitin exit
 */
 void	builtin_exit(t_com	*input);
 
 /*
-**	Built-in setenv
+**	Bluitin setenv
 */
 void	builtin_setenv(t_com *input, char ***env);
 int		parsing_setenv(t_com *input, char **temp);
-int		modify_variable(char *name, char ***env);
-// void	adding_variable(char *name, char ***env);
+int		modify_variable(char *var, char ***env);
 
 /*
-**	Built-in unsetenv
+**	Bluitin unsetenv
 */
 void	builtin_unsetenv(t_com *input, char ***env);
 int		count_var_suppr(t_com *input, char ***env);

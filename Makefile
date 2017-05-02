@@ -6,7 +6,7 @@
 #    By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 13:03:38 by sfranc            #+#    #+#              #
-#    Updated: 2017/05/01 19:33:20 by sfranc           ###   ########.fr        #
+#    Updated: 2017/05/02 12:41:57 by sfranc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRCS = 	$(addprefix $(SRCS_PATH)/, main.c \
 		parsing_command.c \
 		parsing_command2.c \
 		execution.c \
+		builtin_cd.c \
 		builtin_echo.c \
 		builtin_env.c \
 		builtin_exit.c \

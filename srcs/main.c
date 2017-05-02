@@ -6,11 +6,36 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 09:55:07 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/01 16:46:05 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/02 13:42:50 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	display_prompt(char **env)
+{
+	char *user;
+	char *cwd;
+
+	ft_putstr(BCYAN);
+	if ((user = get_env_variable(env, "USER=")))
+	{
+		ft_putstr(user);
+		ft_putstr(": ");
+	}
+	else
+		ft_putstr("minishell: ");
+	free(user);
+	ft_putstr(RESET);
+	
+	ft_putstr(BBLUE);
+	if ((cwd = getcwd(NULL, 0)))
+		ft_putstr(cwd);
+	free(cwd);
+
+	ft_putstr(RESET);
+	ft_putstr(" $> ");
+}
 
 // avec multicommand
 
@@ -30,10 +55,13 @@ int		main(int ac, char **av, char **environ)
 	if (!(env = ft_tabdup(environ)))
 		ft_exit("unable to malloc env", 1);
 	line = NULL;
+
+	// augmenter le SHLVL
+
 	while (1)
 	{
 		status = 0;
-		ft_putstr("$> ");
+		display_prompt(env);
 		if (get_next_line(0, &line) != 1)
 			ft_exit("GNL error", 1);
 		// parsing
@@ -50,7 +78,7 @@ int		main(int ac, char **av, char **environ)
 		while (todo)
 		{
 			if (todo->builtin == CD)
-				ft_putendl("---> cd a venir");
+				builtin_cd(todo, &env);
 			else if (todo->builtin == ECHO)
 				builtin_echo(todo);
 			else if (todo->builtin == ENV)
