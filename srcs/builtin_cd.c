@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/24 16:58:16 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/02 14:30:51 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/02 18:17:04 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,45 @@
 
 void	builtin_cd(t_com *input, char ***env)
 {
+	char	*old_pwd;
+	char	*temp;
+
 	if (!*(input->command + 1))
+	{
 		move_to_home(env);
+		return ;
+	}
+	if (ft_strequ(*(input->command + 1), "-"))
+	{
+		free(*(input->command + 1));
+		*(input->command + 1) = get_env_variable(*env, "OLDPWD=");
+		if (!*(input->command + 1))
+		{
+			ft_putendl_fd("minishell: cd: OLDPWD not set", 2);
+			return ;
+		}
+	}
+	if (!(old_pwd = getcwd(NULL, 0)))
+			;
+	if ((chdir(*(input->command + 1))) != -1)
+	{
+		temp = getcwd(NULL, 0);
+		change_pwd(&temp, env);
+		free(temp);
+		if (old_pwd)
+			change_oldpwd(&old_pwd, env);
+	}
+	else
+	{
+		free(old_pwd);
+		display_cd_err(&*(input->command + 1));
+	}
 }
 
 void 	move_to_home(char ***env)
 {
 	char		*old_pwd;
 	char		*pwd;
-	struct stat	pwd_stat;
 
 	if ((pwd = get_env_variable(*env, "HOME=")))
 	{
@@ -37,25 +67,7 @@ void 	move_to_home(char ***env)
 		else
 		{
 			free(old_pwd);
-			if ((stat(pwd, &pwd_stat)) == -1)
-			{
-				ft_putstr_fd("cd: ", 2);
-				ft_putstr_fd(pwd, 2);
-				ft_putendl_fd(": No such file or directory", 2);
-			}
-			else if (!S_ISDIR(pwd_stat.st_mode))
-			{
-				ft_putstr_fd("cd: ", 2);
-				ft_putstr_fd(pwd, 2);
-				ft_putendl_fd(": Not a directory", 2);
-			}
-			else if ((pwd_stat.st_mode & S_IXUSR) != S_IXUSR)
-			{
-				ft_putstr_fd("cd: ", 2);
-				ft_putstr_fd(pwd, 2);
-				ft_putendl_fd(": Permission denied", 2);
-			}
-			free(pwd);
+			display_cd_err(&pwd);
 		}
 	}
 	else
@@ -67,7 +79,8 @@ void	change_pwd(char **pwd, char ***env)
 	char	*temp;
 
 	temp = ft_strjoin("PWD=", *pwd);
-	modify_variable(temp, env);
+	if (!modify_variable(env, temp))
+		ft_addtotab(env, temp);
 	free(temp);
 	ft_strdel(pwd);
 
@@ -78,9 +91,35 @@ void	change_oldpwd(char **old_pwd, char ***env)
 	char *temp;
 
 	temp = ft_strjoin("OLDPWD=", *old_pwd);
-	modify_variable(temp, env);
+	if (!modify_variable(env, temp))
+		ft_addtotab(env, temp);
 	free(temp);
 	ft_strdel(old_pwd);
+}
+
+void	display_cd_err(char **pwd)
+{
+	struct stat	pwd_stat;
+
+	if ((stat(*pwd, &pwd_stat)) == -1)
+	{
+		ft_putstr_fd("cd: ", 2);
+		ft_putstr_fd(*pwd, 2);
+		ft_putendl_fd(": No such file or directory", 2);
+	}
+	else if (!S_ISDIR(pwd_stat.st_mode))
+	{
+		ft_putstr_fd("cd: ", 2);
+		ft_putstr_fd(*pwd, 2);
+		ft_putendl_fd(": Not a directory", 2);
+	}
+	else if ((pwd_stat.st_mode & S_IXUSR) != S_IXUSR)
+	{
+		ft_putstr_fd("cd: ", 2);
+		ft_putstr_fd(*pwd, 2);
+		ft_putendl_fd(": Permission denied", 2);
+	}
+	ft_strdel(pwd);
 }
 
 char	*get_env_variable(char **env, char *var)

@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 09:55:07 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/02 13:42:50 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/02 18:39:00 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int		main(int ac, char **av, char **environ)
 		status = 0;
 		display_prompt(env);
 		if (get_next_line(0, &line) != 1)
-			ft_exit("GNL error", 1);
+			ft_exit("exit", 0);
 		// parsing
 
 

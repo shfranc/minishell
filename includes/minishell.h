@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 10:07:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/02 13:40:46 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/02 17:03:46 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	builtin_cd(t_com *input, char ***env);
 void 	move_to_home(char ***env);
 void	change_pwd(char **pwd, char ***env);
 void	change_oldpwd(char **old_pwd, char ***env);
+void	display_cd_err(char **pwd);
 char	*get_env_variable(char **env, char *var);
 
 /*
@@ -97,7 +98,7 @@ void	builtin_exit(t_com	*input);
 */
 void	builtin_setenv(t_com *input, char ***env);
 int		parsing_setenv(t_com *input, char **temp);
-int		modify_variable(char *var, char ***env);
+int		modify_variable(char ***env, char *new_var);
 
 /*
 **	Bluitin unsetenv

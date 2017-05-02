@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/24 09:32:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/02 13:01:29 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/02 17:03:56 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	builtin_setenv(t_com *input, char ***env)
 	}
 	if (!parsing_setenv(input, &new_var))
 		return ;
-	if (!modify_variable(new_var, env))
+	if (!modify_variable(env, new_var))
 		ft_addtotab(env, new_var);
 	ft_strdel(&new_var);
 }
@@ -58,7 +58,7 @@ int		parsing_setenv(t_com *input, char **new_var)
 	return (1);
 }
 
-int		modify_variable(char *new_var, char ***env)
+int		modify_variable(char ***env, char *new_var)
 {
 	char	*to_free;
 	int		i;
