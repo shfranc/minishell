@@ -6,11 +6,30 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 19:23:38 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/26 19:26:49 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/03 16:31:58 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	is_builtin(t_com *elem)
+{
+	char	**builtin;
+	int		i;
+	char	*test;
+
+	test = ft_strdup("cd echo env exit setenv unsetenv");
+	builtin = ft_strsplit(test, ' ');
+	free(test);
+	i = 0;
+	while (i < 6)
+	{
+		if (ft_strequ(elem->path, *(builtin + i)))
+			elem->builtin = 1 << i;
+		++i;
+	}
+	ft_freetab(&builtin);
+}
 
 int		move_endofarg(char *s)
 {
@@ -33,9 +52,9 @@ int		move_endofarg(char *s)
 
 char	*strsub_withoutquotes(char *s, int len)
 {
-	char *begin;
-	char *new;
-	int len_less;
+	char	*begin;
+	char	*new;
+	int		len_less;
 
 	len_less = len - nb_quotes(s, len);
 	if (!(new = ft_strnew(len_less)))
@@ -63,5 +82,4 @@ int		nb_quotes(char *s, int len)
 		s++;
 	}
 	return (quotes);
-
 }

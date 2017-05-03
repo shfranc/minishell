@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 10:07:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/02 17:03:46 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/03 18:15:19 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,13 @@ typedef struct	s_command
 				t_com;
 
 /*
+**	Beginning
+*/
+void	increase_shlvl(char ***env);
+void	update_pwd(char ***env);
+void	display_prompt(char **env);		
+
+/*
 **	Read user input
 */
 t_com 	*read_userinput(char *line);
@@ -47,6 +54,7 @@ int		check_semicolon(int check, char ***command);
 **	Parse command
 */
 t_com 	*parse_command(char **command);
+void	create_cmd_list(t_com **todo, char **command);
 char	**split_intoarg(char *s);
 int		check_commandblank(char **command);
 int		check_quotes(char **command);
@@ -72,11 +80,11 @@ int		display_cmd_err(t_com *input, char *error);
 **	Bluitin cd
 */
 void	builtin_cd(t_com *input, char ***env);
+int		fetch_oldpwd(t_com *input, char **env);
 void 	move_to_home(char ***env);
 void	change_pwd(char **pwd, char ***env);
 void	change_oldpwd(char **old_pwd, char ***env);
 void	display_cd_err(char **pwd);
-char	*get_env_variable(char **env, char *var);
 
 /*
 **	Bluitin echo
@@ -87,6 +95,7 @@ void	builtin_echo(t_com *input);
 **	Bluitin env
 */
 void	builtin_env(t_com *vinput, char ***env);
+char	*get_env_variable(char **env, char *var);
 
 /*
 **	Bluitin exit

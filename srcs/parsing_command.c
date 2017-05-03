@@ -6,34 +6,39 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 14:56:40 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/27 15:33:32 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/03 18:29:18 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_com 	*parse_command(char **command)
+t_com	*parse_command(char **command)
 {
 	t_com	*todo;
-	t_com	*elem;
-	char	**wip;
-	int		i;
 
 	if ((check_commandblank(command)))
 	{
 		ft_putendl_fd("minishell: syntax error near unexpected token `;'", 2);
 		ft_freetab(&command);
-		return(NULL);
+		return (NULL);
 	}
-
 	if ((check_quotes(command)))
 	{
 		ft_putendl_fd("minishell: missing closing quote `\"'", 2);
 		ft_freetab(&command);
-		return(NULL);
+		return (NULL);
 	}
-
 	todo = NULL;
+	create_cmd_list(&todo, command);
+	return (todo);
+}
+
+void	create_cmd_list(t_com **todo, char **command)
+{
+	t_com	*elem;
+	char	**wip;
+	int		i;
+
 	i = 0;
 	while (*(command + i))
 	{
@@ -41,23 +46,16 @@ t_com 	*parse_command(char **command)
 		elem = sh_lstnew(wip);
 		ft_freetab(&wip);
 		is_builtin(elem);
-
-		// ft_puttab(elem->command);
-		// ft_putendl("****");
-
-		sh_lstaddlast(&todo, elem);
+		sh_lstaddlast(&*todo, elem);
 		i++;
 	}
-	// ft_puttab(command);
-	// ft_freetab(&command);
-	return (todo);
 }
 
 char	**split_intoarg(char *s)
 {
-	char **wip;
-	int len;
-	char *temp;
+	char	**wip;
+	int		len;
+	char	*temp;
 
 	wip = NULL;
 	while (*s)
@@ -109,23 +107,4 @@ int		check_quotes(char **command)
 		i++;
 	}
 	return (0);
-}
-
-void	is_builtin(t_com *elem)
-{
-	char	**builtin;
-	int		i;
-	char	*test;
-
-	test = ft_strdup("cd echo env exit setenv unsetenv");
-	builtin = ft_strsplit(test, ' ');
-	free(test);
-	i = 0;
-	while (i < 6)
-	{
-		if (ft_strequ(elem->path, *(builtin + i)))
-			elem->builtin = 1 << i;
-		++i;
-	}
-	ft_freetab(&builtin);
 }

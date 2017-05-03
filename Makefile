@@ -6,7 +6,7 @@
 #    By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 13:03:38 by sfranc            #+#    #+#              #
-#    Updated: 2017/05/02 12:41:57 by sfranc           ###   ########.fr        #
+#    Updated: 2017/05/03 19:19:01 by sfranc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME = minishell
 SRCS_PATH = srcs
 OBJS_PATH = objs
 SRCS = 	$(addprefix $(SRCS_PATH)/, main.c \
+		beginning.c \
 		user_input.c \
 		parsing_command.c \
 		parsing_command2.c \
@@ -29,7 +30,6 @@ OBJS =  $(SRCS:$(SRCS_PATH)/%.c=$(OBJS_PATH)/%.o)
 INCLUDES = includes ../libft/libft_gitperso/includes
 LIB = $(LIB_PATH)/libft.a
 LIB_PATH = ../libft/libft_gitperso
-# LIB_PATH = ./libft
 CC = gcc
 # FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 FLAGS = -Wall -Wextra -Werror

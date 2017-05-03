@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/24 09:32:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/02 17:03:56 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/03 15:54:22 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 void	builtin_setenv(t_com *input, char ***env)
 {
 	char	*new_var;
-	
-	(void)new_var;
-	(void)env;
 
 	if (!input->command[1])
 	{

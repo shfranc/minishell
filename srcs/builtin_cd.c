@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/24 16:58:16 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/02 18:17:04 by sfranc           ###   ########.fr       */
+/*   Created: 2017/05/03 16:06:02 by sfranc            #+#    #+#             */
+/*   Updated: 2017/05/03 16:06:07 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,10 @@ void	builtin_cd(t_com *input, char ***env)
 		move_to_home(env);
 		return ;
 	}
-	if (ft_strequ(*(input->command + 1), "-"))
-	{
-		free(*(input->command + 1));
-		*(input->command + 1) = get_env_variable(*env, "OLDPWD=");
-		if (!*(input->command + 1))
-		{
-			ft_putendl_fd("minishell: cd: OLDPWD not set", 2);
-			return ;
-		}
-	}
+	if (!fetch_oldpwd(input, *env))
+		return ;
 	if (!(old_pwd = getcwd(NULL, 0)))
-			;
+		old_pwd = NULL;
 	if ((chdir(*(input->command + 1))) != -1)
 	{
 		temp = getcwd(NULL, 0);
@@ -49,7 +41,22 @@ void	builtin_cd(t_com *input, char ***env)
 	}
 }
 
-void 	move_to_home(char ***env)
+int		fetch_oldpwd(t_com *input, char **env)
+{
+	if (ft_strequ(*(input->command + 1), "-"))
+	{
+		free(*(input->command + 1));
+		*(input->command + 1) = get_env_variable(env, "OLDPWD=");
+		if (!*(input->command + 1))
+		{
+			ft_putendl_fd("minishell: cd: OLDPWD not set", 2);
+			return (0);
+		}
+	}
+	return (1);
+}
+
+void	move_to_home(char ***env)
 {
 	char		*old_pwd;
 	char		*pwd;
@@ -74,66 +81,27 @@ void 	move_to_home(char ***env)
 		ft_putendl_fd("minishell: cd: HOME not set", 2);
 }
 
-void	change_pwd(char **pwd, char ***env)
-{
-	char	*temp;
-
-	temp = ft_strjoin("PWD=", *pwd);
-	if (!modify_variable(env, temp))
-		ft_addtotab(env, temp);
-	free(temp);
-	ft_strdel(pwd);
-
-}
-
-void	change_oldpwd(char **old_pwd, char ***env)
-{
-	char *temp;
-
-	temp = ft_strjoin("OLDPWD=", *old_pwd);
-	if (!modify_variable(env, temp))
-		ft_addtotab(env, temp);
-	free(temp);
-	ft_strdel(old_pwd);
-}
-
 void	display_cd_err(char **pwd)
 {
 	struct stat	pwd_stat;
 
 	if ((stat(*pwd, &pwd_stat)) == -1)
 	{
-		ft_putstr_fd("cd: ", 2);
+		ft_putstr_fd("minishell: cd: ", 2);
 		ft_putstr_fd(*pwd, 2);
 		ft_putendl_fd(": No such file or directory", 2);
 	}
 	else if (!S_ISDIR(pwd_stat.st_mode))
 	{
-		ft_putstr_fd("cd: ", 2);
+		ft_putstr_fd("minishell: cd: ", 2);
 		ft_putstr_fd(*pwd, 2);
 		ft_putendl_fd(": Not a directory", 2);
 	}
 	else if ((pwd_stat.st_mode & S_IXUSR) != S_IXUSR)
 	{
-		ft_putstr_fd("cd: ", 2);
+		ft_putstr_fd("minishell: cd: ", 2);
 		ft_putstr_fd(*pwd, 2);
 		ft_putendl_fd(": Permission denied", 2);
 	}
 	ft_strdel(pwd);
-}
-
-char	*get_env_variable(char **env, char *var)
-{
-	char	*find;
-	int		i;
-
-	i = 0;
-	while (*(env + i))
-	{
-		if ((find = ft_strstr(*(env + i), var)))
-			return (ft_strsub(find, ft_strlen(var),\
-				ft_strlen(find + ft_strlen(var))));
-		i++;
-	}
-	return (NULL);
 }

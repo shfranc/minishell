@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 09:51:41 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/28 12:03:46 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/03 19:18:30 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,53 +17,62 @@ t_com	*sh_lstnew(char **tab)
 	t_com	*elem;
 
 	if (!(elem = (t_com*)malloc(sizeof(t_com))))
-		return (NULL);
+		ft_exit("Unable to malloc", 1);
 	elem->path = ft_strdup(*tab);
-
-	// ft_putendl(elem->path);
-
 	elem->command = ft_tabdup(tab);
-
-	// ft_puttab(elem->command);
-	// ft_putendl("--- lst ---");
-
-	// elem->error = 0;
 	elem->builtin = 0;
-	// elem->status = NULL;
 	elem->next = NULL;
 	return (elem);
 }
 
 void	sh_lstaddlast(t_com **head, t_com *new)
 {
-	t_com *temp;
-	
+	t_com	*temp;
+
 	if (!head)
-		return;
-		if (*head == NULL)
-			*head = new;
-		else
-		{
-			temp = *head;
-			while (temp->next)
-				temp = temp->next;
-			temp->next = new;
-		}
+		return ;
+	if (*head == NULL)
+		*head = new;
+	else
+	{
+		temp = *head;
+		while (temp->next)
+			temp = temp->next;
+		temp->next = new;
+	}
 }
 
 void	sh_lstdel(t_com **head)
 {
-	if (!head)
-		return;
-	while ((*head)->next)
+	t_com *temp;
+	t_com *prev;
+
+	if (!head && !*head)
+		return ;
+	temp = *head;
+	while (temp)
 	{
-		free((*head)->path);
-		ft_freetab(&(*head)->command);
-		free(*head);
-		*head = (*head)->next;
+		free(temp->path);
+		ft_freetab(&temp->command);
+		prev = temp;
+		temp = temp->next;
+		free(prev);
+		
 	}
-	free((*head)->path);
-	ft_freetab(&(*head)->command);
-	free(*head);
-	*head = NULL;
+	// free((*head)->path);
+	// ft_freetab(&(*head)->command);
+	// free(*head);
+	// *head = NULL;
 }
+
+	// while ((*head)->next)
+	// {
+	// 	free((*head)->path);
+	// 	ft_freetab(&(*head)->command);
+	// 	free(*head);
+	// 	*head = (*head)->next;
+	// }
+	// free((*head)->path);
+	// ft_freetab(&(*head)->command);
+	// free(*head);
+	// *head = NULL;

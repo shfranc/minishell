@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 18:32:27 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/27 10:44:13 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/03 17:56:22 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <errno.h>
 #include <stdio.h>
 
-t_com 	*read_userinput(char *line)
+t_com	*read_userinput(char *line)
 {
 	char	**command;
 	t_com	*todo;
@@ -24,13 +24,9 @@ t_com 	*read_userinput(char *line)
 		return (NULL);
 	if (!(command = split_command(line)))
 		return (NULL);
-	
 	if (!(todo = parse_command(command)))
 		return (NULL);
-
-	// ft_puttab(command);
 	ft_freetab(&command);
-	
 	return (todo);
 }
 
@@ -38,8 +34,8 @@ char	**split_command(char *s)
 {
 	char	**command;
 	int		len;
-	int 	check;
-	char 	*temp;
+	int		check;
+	char	*temp;
 
 	command = NULL;
 	check = 0;

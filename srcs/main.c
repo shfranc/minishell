@@ -6,38 +6,15 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 09:55:07 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/02 18:39:00 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/03 19:16:23 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	display_prompt(char **env)
-{
-	char *user;
-	char *cwd;
-
-	ft_putstr(BCYAN);
-	if ((user = get_env_variable(env, "USER=")))
-	{
-		ft_putstr(user);
-		ft_putstr(": ");
-	}
-	else
-		ft_putstr("minishell: ");
-	free(user);
-	ft_putstr(RESET);
-	
-	ft_putstr(BBLUE);
-	if ((cwd = getcwd(NULL, 0)))
-		ft_putstr(cwd);
-	free(cwd);
-
-	ft_putstr(RESET);
-	ft_putstr(" $> ");
-}
-
 // avec multicommand
+
+// int 	execute_command(t_com *todo, char ***env)
 
 int		main(int ac, char **av, char **environ)
 {
@@ -50,22 +27,29 @@ int		main(int ac, char **av, char **environ)
 
 	(void)ac;
 	(void)av;
-	
+	line = NULL;	
 	// copier l'env pour pouvoir le modifier
 	if (!(env = ft_tabdup(environ)))
 		ft_exit("unable to malloc env", 1);
-	line = NULL;
 
-	// augmenter le SHLVL
+
+	// augmenter le SHLVL	
+
+	update_pwd(&env);
+	increase_shlvl(&env);
+	// set pwd
+	// todo = NULL;
+	// start = &todo;
 
 	while (1)
 	{
-		status = 0;
+		// status = 0;
 		display_prompt(env);
 		if (get_next_line(0, &line) != 1)
 			ft_exit("exit", 0);
 		// parsing
 
+		// todo = NULL;
 
 		todo = read_userinput(line);
 		
@@ -74,7 +58,9 @@ int		main(int ac, char **av, char **environ)
 		if (!todo)
 			continue ;
 		// start : buildin ou commande ?
+		status = 0;
 		start = todo;
+
 		while (todo)
 		{
 			if (todo->builtin == CD)
@@ -115,7 +101,6 @@ int		main(int ac, char **av, char **environ)
 		}
 		sh_lstdel(&start);
 	}
-	// free(line);
 	return (0);
 }
 
