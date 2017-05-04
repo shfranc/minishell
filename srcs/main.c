@@ -6,103 +6,127 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 09:55:07 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/03 19:16:23 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/04 15:12:08 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// avec multicommand
-
-// int 	execute_command(t_com *todo, char ***env)
-
 int		main(int ac, char **av, char **environ)
 {
 	char	*line;
 	t_com	*todo;
-	t_com	*start;
-	int		status;
-	pid_t	new;
 	char	**env;
 
 	(void)ac;
 	(void)av;
-	line = NULL;	
-	// copier l'env pour pouvoir le modifier
-	if (!(env = ft_tabdup(environ)))
-		ft_exit("unable to malloc env", 1);
-
-
-	// augmenter le SHLVL	
-
+	line = NULL;
+	env = ft_tabdup(environ);
 	update_pwd(&env);
 	increase_shlvl(&env);
-	// set pwd
-	// todo = NULL;
-	// start = &todo;
-
 	while (1)
 	{
-		// status = 0;
 		display_prompt(env);
 		if (get_next_line(0, &line) != 1)
 			ft_exit("exit", 0);
-		// parsing
-
-		// todo = NULL;
-
 		todo = read_userinput(line);
-		
 		ft_strdel(&line);
-
 		if (!todo)
 			continue ;
-		// start : buildin ou commande ?
-		status = 0;
-		start = todo;
-
-		while (todo)
-		{
-			if (todo->builtin == CD)
-				builtin_cd(todo, &env);
-			else if (todo->builtin == ECHO)
-				builtin_echo(todo);
-			else if (todo->builtin == ENV)
-				builtin_env(todo, &env);
-			else if (todo->builtin == EXIT)
-				builtin_exit(todo);
-			else if (todo->builtin == SETENV)
-				builtin_setenv(todo, &env);
-			else if (todo->builtin == UNSETENV)
-				builtin_unsetenv(todo, &env);
-			// execution
-			else if (launch_command(todo, env))
-			{
-				if ((new = fork()) == -1)
-					ft_exit("Fork failed", 1);
-				else if (new == 0)
-				{
-					ft_putendl("-----------");
-					status = execve(todo->path, todo->command, env);
-					ft_putnbr_endl(status);
-				}
-				else
-				{
-					wait(0);
-					ft_putnbr_endl(status);
-					ft_putendl("fin");
-				}
-			}
-
-			// verif si mauvais parsing
-			if (status == -1)
-				ft_exit("Kill ghost processus", 1);
-			todo=todo->next;
-		}
-		sh_lstdel(&start);
+		execute_command(todo, &env);
 	}
 	return (0);
 }
+
+// MAIN AVANT MISE A LA NORME
+
+// int		main(int ac, char **av, char **environ)
+// {
+// 	char	*line;
+// 	t_com	*todo;
+// 	t_com	*start;
+// 	int		status;
+// 	pid_t	new;
+// 	char	**env;
+
+// 	(void)ac;
+// 	(void)av;
+// 	line = NULL;	
+// 	// copier l'env pour pouvoir le modifier
+// 	if (!(env = ft_tabdup(environ)))
+// 		ft_exit("unable to malloc env", 1);
+
+
+// 	// augmenter le SHLVL	
+
+// 	update_pwd(&env);
+// 	increase_shlvl(&env);
+// 	// set pwd
+// 	// todo = NULL;
+// 	// start = &todo;
+
+// 	while (1)
+// 	{
+// 		// status = 0;
+// 		display_prompt(env);
+// 		if (get_next_line(0, &line) != 1)
+// 			ft_exit("exit", 0);
+// 		// parsing
+
+// 		// todo = NULL;
+
+// 		todo = read_userinput(line);
+		
+// 		ft_strdel(&line);
+
+// 		if (!todo)
+// 			continue ;
+// 		// start : buildin ou commande ?
+// 		status = 0;
+// 		start = todo;
+
+// 		while (todo)
+// 		{
+// 			if (todo->builtin == CD)
+// 				builtin_cd(todo, &env);
+// 			else if (todo->builtin == ECHO)
+// 				builtin_echo(todo);
+// 			else if (todo->builtin == ENV)
+// 				builtin_env(todo, &env);
+// 			else if (todo->builtin == EXIT)
+// 				builtin_exit(todo);
+// 			else if (todo->builtin == SETENV)
+// 				builtin_setenv(todo, &env);
+// 			else if (todo->builtin == UNSETENV)
+// 				builtin_unsetenv(todo, &env);
+// 			// execution
+// 			else if (launch_command(todo, env))
+// 			{
+// 				if ((new = fork()) == -1)
+// 					ft_exit("Fork failed", 1);
+// 				else if (new == 0)
+// 				{
+// 					ft_putendl("-----------");
+// 					status = execve(todo->path, todo->command, env);
+// 					ft_putnbr_endl(status);
+// 				}
+// 				else
+// 				{
+// 					wait(0);
+// 					ft_putnbr_endl(status);
+// 					ft_putendl("fin");
+// 				}
+// 			}
+
+// 			// verif si mauvais parsing
+// 			if (status == -1)
+// 				ft_exit("Kill ghost processus", 1);
+// 			todo=todo->next;
+// 		}
+// 		sh_lstdel(&start);
+// 	}
+// 	return (0);
+// }
 
 // sans multicommand
 

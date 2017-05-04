@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 09:51:41 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/03 19:18:30 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/04 15:13:51 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,22 +57,5 @@ void	sh_lstdel(t_com **head)
 		prev = temp;
 		temp = temp->next;
 		free(prev);
-		
 	}
-	// free((*head)->path);
-	// ft_freetab(&(*head)->command);
-	// free(*head);
-	// *head = NULL;
 }
-
-	// while ((*head)->next)
-	// {
-	// 	free((*head)->path);
-	// 	ft_freetab(&(*head)->command);
-	// 	free(*head);
-	// 	*head = (*head)->next;
-	// }
-	// free((*head)->path);
-	// ft_freetab(&(*head)->command);
-	// free(*head);
-	// *head = NULL;

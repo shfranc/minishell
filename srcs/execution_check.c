@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution.c                                        :+:      :+:    :+:   */
+/*   execution_check.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/27 10:41:23 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/04 12:54:16 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/04 14:31:38 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ int		check_existing_path(t_com *input)
 	char		*temp;
 	struct stat	tmp_stat;
 	int			ret;
-
-	ft_putendl(input->path);
 
 	if ((ret = stat(input->path, &tmp_stat)) != -1)
 	{

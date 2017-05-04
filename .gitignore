@@ -1,6 +1,9 @@
-a.out
+# no executable
 minishell
-essais/a.out
+
+# no library
+libft/libft.a
+
+# no objects
 objs/*.o
 libft/objs/*.o
-libft/libft.a

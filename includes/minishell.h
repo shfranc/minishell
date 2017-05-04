@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 10:07:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/03 18:15:19 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/04 15:17:34 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,19 @@ int		move_endofarg(char *s);
 int		nb_quotes(char *s, int len);
 
 /*
-**	Execution
+**	Execution check
 */
 int		launch_command(t_com *input, char **env);
 int 	check_existing_path(t_com *input);
 void	search_through_path(t_com *input, char **path, char **error);
 char	**get_path_variable(char **env);
 int		display_cmd_err(t_com *input, char *error);
+
+/*
+**	Execution fork
+*/
+void 	execute_command(t_com *todo, char ***env);
+int		launch_builtin(t_com *todo, char ***env);
 
 /*
 **	Bluitin cd
