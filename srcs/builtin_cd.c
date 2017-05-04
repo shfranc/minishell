@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/03 16:06:02 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/03 16:06:07 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/04 13:00:11 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	builtin_cd(t_com *input, char ***env)
 		old_pwd = NULL;
 	if ((chdir(*(input->command + 1))) != -1)
 	{
-		temp = getcwd(NULL, 0);
-		change_pwd(&temp, env);
+		if ((temp = getcwd(NULL, 0))) // initialiser temp a NULL ???
+			change_pwd(&temp, env);
 		free(temp);
 		if (old_pwd)
 			change_oldpwd(&old_pwd, env);
@@ -52,6 +52,8 @@ int		fetch_oldpwd(t_com *input, char **env)
 			ft_putendl_fd("minishell: cd: OLDPWD not set", 2);
 			return (0);
 		}
+		else
+			ft_putendl(*(input->command + 1));
 	}
 	return (1);
 }
