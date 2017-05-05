@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/03 18:13:20 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/04 14:42:38 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/05 15:35:59 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,22 +60,34 @@ void	update_pwd(char ***env)
 	}
 }
 
-void	display_prompt(char **env)
+void	display_prompt(void)
 {
 	char *user;
 	char *cwd;
 
+	// (void)env;
+
 	user = NULL;
 	cwd = NULL;
 	ft_putstr(BCYAN);
-	if ((user = get_env_variable(env, "USER=")))
+
+	if ((user = getlogin())) // utilisation de getlogin pour se passer de l'env ici. C'est une static, on ne doit pas la free.
 	{
 		ft_putstr(user);
 		ft_putstr(": ");
 	}
 	else
 		ft_putstr("minishell: ");
-	free(user);
+
+	// if ((user = get_env_variable(env, "USER=")))
+	// {
+	// 	ft_putstr(user);
+	// 	ft_putstr(": ");
+	// }
+	// else
+	// 	ft_putstr("minishell: ");
+
+	// free(user);
 	ft_putstr(RESET);
 	ft_putstr(BBLUE);
 	if ((cwd = getcwd(NULL, 0)))

@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 10:07:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/04 18:44:15 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/05 20:17:12 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <sys/wait.h>
 # include <signal.h>
 # include <sys/stat.h>
+# include <sys/ioctl.h>
 
 # define CD			1
 # define ECHO		1 << 1
@@ -33,12 +34,14 @@ typedef struct	s_command
 	struct s_command	*next;
 }				t_com;
 
+// static int g_status;
+
 /*
 **	Beginning
 */
 void			increase_shlvl(char ***env);
 void			update_pwd(char ***env);
-void			display_prompt(char **env);
+void			display_prompt(void);
 
 /*
 **	Read user input
@@ -120,6 +123,11 @@ int				modify_variable(char ***env, char *new_var);
 void			builtin_unsetenv(t_com *input, char ***env);
 int				count_var_suppr(t_com *input, char ***env);
 int				check_var_suppr(t_com *input, char *env);
+
+/*
+**	Lists minishell
+*/
+void		ft_handler(int signal);
 
 /*
 **	Lists minishell

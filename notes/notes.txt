@@ -148,6 +148,7 @@ PROTO
 	pid_t	wait(int *stat_loc);
 
 ◦ signal, kill
+	kill envoi un signal, signal le recupere.
 	int	kill(pid_t pid, int sig);
 	Upon successful completion, a value of 0 is returned.  Otherwise, a value of -1.
 	send signal to a process
@@ -159,6 +160,10 @@ PROTO
              and for which the process has permission; this is a variant of killpg(2).
 
      If pid is -1: (...)
+
+    void (*signal(int sig, void (*func)(int)))(int)
+
+    creer un gestionnaire de signaux, type void gestionnaire(int sig)
 
 ◦ exit
 

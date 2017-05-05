@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 14:23:39 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/04 15:11:09 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/05 19:58:46 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 void	execute_command(t_com *todo, char ***env)
 {
 	t_com	*start;
-	int		status;
 	pid_t	new;
+	int		status;
 
-	status = 0;
 	start = todo;
+	status = 0;
 	while (todo)
 	{
 		if (!launch_builtin(todo, env))
@@ -27,15 +27,20 @@ void	execute_command(t_com *todo, char ***env)
 			if (launch_command(todo, *env))
 			{
 				if ((new = fork()) == -1)
-					ft_exit("Fork failed", 1);
+					ft_exit("minishell: Fork failed", 1);
 				else if (new == 0)
-					status = execve(todo->path, todo->command, *env);
+				{
+					if ((status = execve(todo->path, todo->command, *env)) == -1)
+						ft_exit("minishell: execve: an error has occurred", 2);
+				}
 				else
-					wait(0);
+				{
+					ft_putstr("status:");
+					ft_putnbr_endl(status);
+					wait(&status);
+				}
 			}
 		}
-		if (status == -1)
-			ft_exit("Kill ghost processus", 1);
 		todo = todo->next;
 	}
 	sh_lstdel(&start);

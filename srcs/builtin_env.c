@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 11:55:08 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/03 16:06:39 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/05 11:41:52 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	builtin_env(t_com *input, char ***env)
 {
-	(void)input;
 	if (!*(input->command + 1))
 		ft_puttab(*env);
 }
