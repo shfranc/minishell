@@ -6,27 +6,30 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 12:21:08 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/05 20:34:48 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/07 22:24:21 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// void (*signal(int sig, void (*handler)(int)))(int)
-
-void		ft_handler(int signal)
+void		ft_handler_father(int sig)
 {
-	if (signal == SIGINT)
+	// write(1, "father", 7);
+
+	if (sig == SIGINT)
 	{
-		ft_putstr("signal capte");
 		write(1, "\n", 1);
 		display_prompt();
 	}
 }
 
-// SIGABRT abnormal termination, e.g., from abort
-// SIGFPE arithmetic error, e.g., zero divide or overflow
-// SIGILL illegal function image, e.g., illegal instruction
-// SIGINT interactive attention, e.g., interrupt
-// SIGSEGV illegal storage access, e.g., access outside memory limits 
-// SIGTERM termination request sent to this program
+void		ft_handler_child(int sig)
+{
+	// write(1, "child", 6);
+
+	if (sig == SIGINT)
+	{
+		write(1, "\n", 1);
+		kill(SIGCHLD, SIGINT);
+	}
+}

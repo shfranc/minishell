@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 14:23:39 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/05 19:58:46 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/07 22:22:36 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,17 @@ void	execute_command(t_com *todo, char ***env)
 		{
 			if (launch_command(todo, *env))
 			{
+				if (signal(SIGINT, ft_handler_child) == SIG_ERR)
+					ft_exit("minishell: unable to catch the signal", 1);
 				if ((new = fork()) == -1)
 					ft_exit("minishell: Fork failed", 1);
 				else if (new == 0)
-				{
+				{						
 					if ((status = execve(todo->path, todo->command, *env)) == -1)
 						ft_exit("minishell: execve: an error has occurred", 2);
 				}
 				else
-				{
-					ft_putstr("status:");
-					ft_putnbr_endl(status);
 					wait(&status);
-				}
 			}
 		}
 		todo = todo->next;
