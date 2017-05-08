@@ -6,30 +6,30 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/27 10:41:23 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/05 14:51:12 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/08 11:02:07 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <errno.h>
 
-int		launch_command(t_com *input, char **env)
+int		ft_launch_command(t_com *input, char **env)
 {
 	char			**path;
 	char			*error;
 
 	if (!*input->path)
-		return (display_cmd_err(input, ": command not found"));
+		return (ft_display_cmd_err(input, ": command not found"));
 	error = NULL;
 	if (ft_strchr(input->path, '/'))
-		return (check_existing_path(input));
-	if ((path = get_path_variable(env)))
+		return (ft_check_existing_path(input));
+	if ((path = ft_get_path_variable(env)))
 	{
-		search_through_path(input, path, &error);
+		ft_search_through_path(input, path, &error);
 		ft_freetab(&path);
 		if (error)
 		{
-			display_cmd_err(input, error);
+			ft_display_cmd_err(input, error);
 			free(error);
 			return (0);
 		}
@@ -37,10 +37,10 @@ int		launch_command(t_com *input, char **env)
 			return (1);
 	}
 	else
-		return (display_cmd_err(input, ": command not found"));
+		return (ft_display_cmd_err(input, ": command not found"));
 }
 
-int		check_existing_path(t_com *input)
+int		ft_check_existing_path(t_com *input)
 {
 	char		*temp;
 	struct stat	tmp_stat;
@@ -49,9 +49,9 @@ int		check_existing_path(t_com *input)
 	if ((ret = stat(input->path, &tmp_stat)) != -1)
 	{
 		if (S_ISDIR(tmp_stat.st_mode))
-			return (display_cmd_err(input, ": is a directory"));
+			return (ft_display_cmd_err(input, ": is a directory"));
 		else if ((tmp_stat.st_mode & S_IXUSR) != S_IXUSR)
-			return (display_cmd_err(input, ": Permission denied"));
+			return (ft_display_cmd_err(input, ": Permission denied"));
 		else
 			return (1);
 	}
@@ -60,14 +60,14 @@ int		check_existing_path(t_com *input)
 		temp = ft_strsub(input->path, 0, ft_strlen(input->path) - 1);
 		ret = stat(temp, &tmp_stat);
 		free(temp);
-		return (ret != -1 ? display_cmd_err(input, ": Not a directory") :\
-			display_cmd_err(input, ": No such file or directory"));
+		return (ret != -1 ? ft_display_cmd_err(input, ": Not a directory") :\
+			ft_display_cmd_err(input, ": No such file or directory"));
 	}
 	else
-		return (display_cmd_err(input, ": No such file or directory"));
+		return (ft_display_cmd_err(input, ": No such file or directory"));
 }
 
-void	search_through_path(t_com *input, char **path, char **error)
+void	ft_search_through_path(t_com *input, char **path, char **error)
 {
 	struct stat	tmp_stat;
 	char		*test;
@@ -96,7 +96,7 @@ void	search_through_path(t_com *input, char **path, char **error)
 	ret == -1 ? *error = ft_strdup(": command not found") : 0;
 }
 
-char	**get_path_variable(char **env)
+char	**ft_get_path_variable(char **env)
 {
 	char	**path;
 	char	*temp;
@@ -118,7 +118,7 @@ char	**get_path_variable(char **env)
 	return (NULL);
 }
 
-int		display_cmd_err(t_com *input, char *error)
+int		ft_display_cmd_err(t_com *input, char *error)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(input->path, 2);

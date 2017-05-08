@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 18:32:27 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/03 17:56:22 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/08 10:56:13 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,22 @@
 #include <errno.h>
 #include <stdio.h>
 
-t_com	*read_userinput(char *line)
+t_com	*ft_read_userinput(char *line)
 {
 	char	**command;
 	t_com	*todo;
 
-	if (beginwith_semicolon(line))
+	if (ft_beginwith_semicolon(line))
 		return (NULL);
-	if (!(command = split_command(line)))
+	if (!(command = ft_split_command(line)))
 		return (NULL);
-	if (!(todo = parse_command(command)))
+	if (!(todo = ft_parse_command(command)))
 		return (NULL);
 	ft_freetab(&command);
 	return (todo);
 }
 
-char	**split_command(char *s)
+char	**ft_split_command(char *s)
 {
 	char	**command;
 	int		len;
@@ -44,7 +44,7 @@ char	**split_command(char *s)
 		if (*s && *s != ';')
 		{
 			check = 0;
-			len = move_endofcommand(s);
+			len = ft_move_endofcommand(s);
 			temp = ft_strsub(s, 0, len);
 			ft_addtotab(&command, temp);
 			free(temp);
@@ -52,13 +52,13 @@ char	**split_command(char *s)
 		}
 		else if (*s && *s++ == ';')
 			check++;
-		if (check_semicolon(check, &command))
+		if (ft_check_semicolon(check, &command))
 			return (NULL);
 	}
 	return (command);
 }
 
-int		beginwith_semicolon(char *s)
+int		ft_beginwith_semicolon(char *s)
 {
 	char	*trim;
 
@@ -84,7 +84,7 @@ int		beginwith_semicolon(char *s)
 	return (0);
 }
 
-int		check_semicolon(int check, char ***command)
+int		ft_check_semicolon(int check, char ***command)
 {
 	if (check > 1)
 	{
@@ -96,7 +96,7 @@ int		check_semicolon(int check, char ***command)
 	return (0);
 }
 
-int		move_endofcommand(char *s)
+int		ft_move_endofcommand(char *s)
 {
 	int len;
 

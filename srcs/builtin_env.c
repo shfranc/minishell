@@ -6,19 +6,19 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 11:55:08 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/05 11:41:52 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/08 11:08:38 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	builtin_env(t_com *input, char ***env)
+void	ft_builtin_env(t_com *input, char ***env)
 {
 	if (!*(input->command + 1))
 		ft_puttab(*env);
 }
 
-char	*get_env_variable(char **env, char *var)
+char	*ft_get_env_variable(char **env, char *var)
 {
 	char	*find;
 	int		i;
@@ -36,23 +36,23 @@ char	*get_env_variable(char **env, char *var)
 	return (NULL);
 }
 
-void	change_pwd(char **pwd, char ***env)
+void	ft_change_pwd(char **pwd, char ***env)
 {
 	char	*temp;
 
 	temp = ft_strjoin("PWD=", *pwd);
-	if (!modify_variable(env, temp))
+	if (!ft_modify_variable(env, temp))
 		ft_addtotab(env, temp);
 	free(temp);
 	ft_strdel(pwd);
 }
 
-void	change_oldpwd(char **old_pwd, char ***env)
+void	ft_change_oldpwd(char **old_pwd, char ***env)
 {
 	char *temp;
 
 	temp = ft_strjoin("OLDPWD=", *old_pwd);
-	if (!modify_variable(env, temp))
+	if (!ft_modify_variable(env, temp))
 		ft_addtotab(env, temp);
 	free(temp);
 	ft_strdel(old_pwd);

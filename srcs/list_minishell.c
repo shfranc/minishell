@@ -6,13 +6,13 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 09:51:41 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/04 15:13:51 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/08 11:11:37 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_com	*sh_lstnew(char **tab)
+t_com	*ft_sh_lstnew(char **tab)
 {
 	t_com	*elem;
 
@@ -25,7 +25,7 @@ t_com	*sh_lstnew(char **tab)
 	return (elem);
 }
 
-void	sh_lstaddlast(t_com **head, t_com *new)
+void	ft_sh_lstaddlast(t_com **head, t_com *new)
 {
 	t_com	*temp;
 
@@ -42,7 +42,7 @@ void	sh_lstaddlast(t_com **head, t_com *new)
 	}
 }
 
-void	sh_lstdel(t_com **head)
+void	ft_sh_lstdel(t_com **head)
 {
 	t_com *temp;
 	t_com *prev;

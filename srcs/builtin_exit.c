@@ -6,13 +6,13 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/24 17:02:30 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/03 16:06:51 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/08 11:08:51 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	builtin_exit(t_com *input)
+void	ft_builtin_exit(t_com *input)
 {
 	ft_putendl_fd("exit", 2);
 	if (!*(input->command + 1))

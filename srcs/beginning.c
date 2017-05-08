@@ -6,20 +6,20 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/03 18:13:20 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/07 22:25:01 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/08 11:10:31 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	increase_shlvl(char ***env)
+void	ft_increase_shlvl(char ***env)
 {
 	char	*shlvl;
 	char	*temp;
 	char	*newlvl;
 	int		lvl;
 
-	if ((shlvl = get_env_variable(*env, "SHLVL=")))
+	if ((shlvl = ft_get_env_variable(*env, "SHLVL=")))
 	{
 		lvl = ft_atoi(shlvl) + 1;
 		newlvl = ft_itoa(lvl);
@@ -27,14 +27,14 @@ void	increase_shlvl(char ***env)
 		shlvl = ft_strjoin("SHLVL=", newlvl);
 		free(temp);
 		free(newlvl);
-		modify_variable(env, shlvl);
+		ft_modify_variable(env, shlvl);
 		free(shlvl);
 	}
 	else
 		ft_addtotab(env, "SHLVL=1");
 }
 
-void	update_pwd(char ***env)
+void	ft_update_pwd(char ***env)
 {
 	char	*cwd;
 	char	*pwd;
@@ -42,12 +42,12 @@ void	update_pwd(char ***env)
 
 	if (!(cwd = getcwd(NULL, 0)))
 		return ;
-	if ((pwd = get_env_variable(*env, "PWD=")))
+	if ((pwd = ft_get_env_variable(*env, "PWD=")))
 	{
 		temp = cwd;
 		cwd = ft_strjoin("PWD=", cwd);
 		free(temp);
-		modify_variable(env, cwd);
+		ft_modify_variable(env, cwd);
 		free(pwd);
 		free(cwd);
 	}
@@ -60,7 +60,7 @@ void	update_pwd(char ***env)
 	}
 }
 
-void	display_prompt(void)
+void	ft_display_prompt(void)
 {
 	char *user;
 	char *cwd;

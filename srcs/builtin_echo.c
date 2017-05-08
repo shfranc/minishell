@@ -6,13 +6,13 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 15:31:52 by sfranc            #+#    #+#             */
-/*   Updated: 2017/04/24 17:01:33 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/08 11:08:46 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	builtin_echo(t_com *input)
+void	ft_builtin_echo(t_com *input)
 {
 	int	i;
 	int n;

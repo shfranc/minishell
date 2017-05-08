@@ -6,47 +6,47 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/03 16:06:02 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/04 15:12:46 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/08 11:05:29 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	builtin_cd(t_com *input, char ***env)
+void	ft_builtin_cd(t_com *input, char ***env)
 {
 	char	*old_pwd;
 	char	*temp;
 
 	if (!*(input->command + 1))
 	{
-		move_to_home(env);
+		ft_move_to_home(env);
 		return ;
 	}
-	if (!fetch_oldpwd(input, *env))
+	if (!ft_fetch_oldpwd(input, *env))
 		return ;
 	if (!(old_pwd = getcwd(NULL, 0)))
 		old_pwd = NULL;
 	if ((chdir(*(input->command + 1))) != -1)
 	{
 		if ((temp = getcwd(NULL, 0)))
-			change_pwd(&temp, env);
+			ft_change_pwd(&temp, env);
 		free(temp);
 		if (old_pwd)
-			change_oldpwd(&old_pwd, env);
+			ft_change_oldpwd(&old_pwd, env);
 	}
 	else
 	{
 		free(old_pwd);
-		display_cd_err(&*(input->command + 1));
+		ft_display_cd_err(&*(input->command + 1));
 	}
 }
 
-int		fetch_oldpwd(t_com *input, char **env)
+int		ft_fetch_oldpwd(t_com *input, char **env)
 {
 	if (ft_strequ(*(input->command + 1), "-"))
 	{
 		free(*(input->command + 1));
-		*(input->command + 1) = get_env_variable(env, "OLDPWD=");
+		*(input->command + 1) = ft_get_env_variable(env, "OLDPWD=");
 		if (!*(input->command + 1))
 		{
 			ft_putendl_fd("minishell: cd: OLDPWD not set", 2);
@@ -58,32 +58,32 @@ int		fetch_oldpwd(t_com *input, char **env)
 	return (1);
 }
 
-void	move_to_home(char ***env)
+void	ft_move_to_home(char ***env)
 {
 	char		*old_pwd;
 	char		*pwd;
 
-	if ((pwd = get_env_variable(*env, "HOME=")))
+	if ((pwd = ft_get_env_variable(*env, "HOME=")))
 	{
 		if (!(old_pwd = getcwd(NULL, 0)))
 			;
 		if ((chdir(pwd)) != -1)
 		{
-			change_pwd(&pwd, env);
+			ft_change_pwd(&pwd, env);
 			if (old_pwd)
-				change_oldpwd(&old_pwd, env);
+				ft_change_oldpwd(&old_pwd, env);
 		}
 		else
 		{
 			free(old_pwd);
-			display_cd_err(&pwd);
+			ft_display_cd_err(&pwd);
 		}
 	}
 	else
 		ft_putendl_fd("minishell: cd: HOME not set", 2);
 }
 
-void	display_cd_err(char **pwd)
+void	ft_display_cd_err(char **pwd)
 {
 	struct stat	pwd_stat;
 

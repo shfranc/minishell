@@ -6,13 +6,13 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/24 09:32:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/03 15:54:22 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/08 11:08:36 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	builtin_setenv(t_com *input, char ***env)
+void	ft_builtin_setenv(t_com *input, char ***env)
 {
 	char	*new_var;
 
@@ -21,14 +21,14 @@ void	builtin_setenv(t_com *input, char ***env)
 		ft_putendl_fd("minishell: setenv: too few arguments", 2);
 		return ;
 	}
-	if (!parsing_setenv(input, &new_var))
+	if (!ft_parsing_setenv(input, &new_var))
 		return ;
-	if (!modify_variable(env, new_var))
+	if (!ft_modify_variable(env, new_var))
 		ft_addtotab(env, new_var);
 	ft_strdel(&new_var);
 }
 
-int		parsing_setenv(t_com *input, char **new_var)
+int		ft_parsing_setenv(t_com *input, char **new_var)
 {
 	if (input->command[1][0] == '=')
 	{
@@ -55,7 +55,7 @@ int		parsing_setenv(t_com *input, char **new_var)
 	return (1);
 }
 
-int		modify_variable(char ***env, char *new_var)
+int		ft_modify_variable(char ***env, char *new_var)
 {
 	char	*to_free;
 	int		i;

@@ -6,13 +6,13 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/24 09:32:52 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/03 15:52:20 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/08 11:09:44 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	builtin_unsetenv(t_com *input, char ***env)
+void	ft_builtin_unsetenv(t_com *input, char ***env)
 {
 	char	**new;
 	char	**old;
@@ -20,7 +20,7 @@ void	builtin_unsetenv(t_com *input, char ***env)
 	int		i;
 	int		j;
 
-	len = count_var_suppr(input, env);
+	len = ft_count_var_suppr(input, env);
 	if (!(new = (char**)malloc(sizeof(char*) * (len + 1))))
 		ft_exit("Unable to malloc env", 1);
 	*(new + len) = 0;
@@ -28,7 +28,7 @@ void	builtin_unsetenv(t_com *input, char ***env)
 	j = 0;
 	while (*(*env + j) && i < len)
 	{
-		if (check_var_suppr(input, *(*env + j)))
+		if (ft_check_var_suppr(input, *(*env + j)))
 			free(*(*env + j++));
 		else
 			*(new + i++) = *(*env + j++);
@@ -40,7 +40,7 @@ void	builtin_unsetenv(t_com *input, char ***env)
 	free(old);
 }
 
-int		count_var_suppr(t_com *input, char ***env)
+int		ft_count_var_suppr(t_com *input, char ***env)
 {
 	char	*temp;
 	int		len;
@@ -66,7 +66,7 @@ int		count_var_suppr(t_com *input, char ***env)
 	return (len);
 }
 
-int		check_var_suppr(t_com *input, char *env)
+int		ft_check_var_suppr(t_com *input, char *env)
 {
 	char	*temp;
 	int		i;

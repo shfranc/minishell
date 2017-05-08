@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 12:21:08 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/07 22:24:21 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/08 10:54:30 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,19 @@
 
 void		ft_handler_father(int sig)
 {
-	// write(1, "father", 7);
-
 	if (sig == SIGINT)
 	{
 		write(1, "\n", 1);
-		display_prompt();
+		ft_display_prompt();
 	}
 }
 
 void		ft_handler_child(int sig)
 {
-	// write(1, "child", 6);
-
 	if (sig == SIGINT)
 	{
-		write(1, "\n", 1);
+		if (wait(0))
+			write(1, "\n", 1);
 		kill(SIGCHLD, SIGINT);
 	}
 }

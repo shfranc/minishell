@@ -6,54 +6,59 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 14:23:39 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/07 22:22:36 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/08 11:08:19 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execute_command(t_com *todo, char ***env)
+void	ft_execute_command(t_com *todo, char ***env)
 {
-	t_com	*start;
-	pid_t	new;
-	int		status;
+	t_com	*temp;
 
-	start = todo;
-	status = 0;
-	while (todo)
+	temp = todo;
+	while (temp)
 	{
-		if (!launch_builtin(todo, env))
+		if (!ft_launch_builtin(temp, env))
 		{
-			if (launch_command(todo, *env))
+			if (ft_launch_command(temp, *env))
 			{
 				if (signal(SIGINT, ft_handler_child) == SIG_ERR)
 					ft_exit("minishell: unable to catch the signal", 1);
-				if ((new = fork()) == -1)
-					ft_exit("minishell: Fork failed", 1);
-				else if (new == 0)
-				{						
-					if ((status = execve(todo->path, todo->command, *env)) == -1)
-						ft_exit("minishell: execve: an error has occurred", 2);
-				}
-				else
-					wait(&status);
+				ft_fork(temp, *env);
 			}
 		}
-		todo = todo->next;
+		temp = temp->next;
 	}
-	sh_lstdel(&start);
 }
 
-int		launch_builtin(t_com *todo, char ***env)
+int		ft_launch_builtin(t_com *todo, char ***env)
 {
 	int status;
 
 	status = 6;
-	todo->builtin == CD ? builtin_cd(todo, env) : status--;
-	todo->builtin == ECHO ? builtin_echo(todo) : status--;
-	todo->builtin == ENV ? builtin_env(todo, env) : status--;
-	todo->builtin == EXIT ? builtin_exit(todo) : status--;
-	todo->builtin == SETENV ? builtin_setenv(todo, env) : status--;
-	todo->builtin == UNSETENV ? builtin_unsetenv(todo, env) : status--;
+	todo->builtin == CD ? ft_builtin_cd(todo, env) : status--;
+	todo->builtin == ECHO ? ft_builtin_echo(todo) : status--;
+	todo->builtin == ENV ? ft_builtin_env(todo, env) : status--;
+	todo->builtin == EXIT ? ft_builtin_exit(todo) : status--;
+	todo->builtin == SETENV ? ft_builtin_setenv(todo, env) : status--;
+	todo->builtin == UNSETENV ? ft_builtin_unsetenv(todo, env) : status--;
 	return (status);
+}
+
+void	ft_fork(t_com *elem, char **env)
+{
+	pid_t	new;
+	int		status;
+
+	status = 0;
+	if ((new = fork()) == -1)
+		ft_exit("minishell: Fork failed", 1);
+	else if (new == 0)
+	{
+		if ((status = execve(elem->path, elem->command, env)) == -1)
+			ft_exit("minishell: execve: an error has occurred", 2);
+	}
+	else
+		wait(&status);
 }

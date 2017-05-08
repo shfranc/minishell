@@ -6,13 +6,13 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 19:23:38 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/03 16:31:58 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/08 10:59:10 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	is_builtin(t_com *elem)
+void	ft_is_builtin(t_com *elem)
 {
 	char	**builtin;
 	int		i;
@@ -31,7 +31,7 @@ void	is_builtin(t_com *elem)
 	ft_freetab(&builtin);
 }
 
-int		move_endofarg(char *s)
+int		ft_move_endofarg(char *s)
 {
 	int len;
 
@@ -50,13 +50,13 @@ int		move_endofarg(char *s)
 	return (len);
 }
 
-char	*strsub_withoutquotes(char *s, int len)
+char	*ft_strsub_withoutquotes(char *s, int len)
 {
 	char	*begin;
 	char	*new;
 	int		len_less;
 
-	len_less = len - nb_quotes(s, len);
+	len_less = len - ft_nb_quotes(s, len);
 	if (!(new = ft_strnew(len_less)))
 		ft_exit("Unable to malloc", 1);
 	begin = new;
@@ -70,7 +70,7 @@ char	*strsub_withoutquotes(char *s, int len)
 	return (begin);
 }
 
-int		nb_quotes(char *s, int len)
+int		ft_nb_quotes(char *s, int len)
 {
 	int quotes;
 
