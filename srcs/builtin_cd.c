@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/03 16:06:02 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/08 11:05:29 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/08 17:23:40 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,10 @@ void	ft_display_cd_err(char **pwd)
 		ft_putstr_fd(*pwd, 2);
 		ft_putendl_fd(": Not a directory", 2);
 	}
-	else if ((pwd_stat.st_mode & S_IXUSR) != S_IXUSR)
+	else
+	// else if ((pwd_stat.st_mode & S_IXUSR) != S_IXUSR)
 	{
+		ft_putendl("-- 3 ");
 		ft_putstr_fd("minishell: cd: ", 2);
 		ft_putstr_fd(*pwd, 2);
 		ft_putendl_fd(": Permission denied", 2);
