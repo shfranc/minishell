@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 10:07:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/09 11:07:54 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/09 11:26:16 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ void			ft_create_cmd_list(t_com **todo, char **command);
 char			**ft_split_intoarg(char *s);
 int				ft_check_commandblank(char **command);
 int				ft_check_quotes(char **command);
-void			ft_is_builtin(t_com *elem);
 
 /*
 **	Parse command 2
 */
+void			ft_is_builtin(t_com *elem);
 char			*ft_strsub_withoutquotes(char *s, int len);
 int				ft_move_endofarg(char *s);
 int				ft_nb_quotes(char *s, int len);
