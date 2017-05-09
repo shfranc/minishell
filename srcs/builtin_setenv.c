@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/24 09:32:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/09 15:22:34 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/09 16:44:07 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ int		ft_modify_variable(char ***env, char *new_var)
 	i = 0;
 	while (*(*env + i))
 	{
-		temp_env = ft_strsub(*(*env + i), 0, ft_strchr(*(*env + i), '=') - *(*env + i));
+		temp_env = ft_strsub(*(*env + i), 0,\
+			ft_strchr(*(*env + i), '=') - *(*env + i));
 		if (ft_strequ(temp_env, temp_var))
 		{
 			to_free = *(*env + i);

@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/03 16:06:02 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/09 16:35:47 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/09 16:43:43 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int		ft_fetch_oldpwd(t_com *input, char **env)
 		{
 			if (access(*(input->command + 1), X_OK) != -1)
 				ft_putendl(*(input->command + 1));
-		}	
+		}
 	}
 	return (1);
 }
