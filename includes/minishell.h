@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 10:07:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/08 11:13:06 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/09 11:07:54 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void			ft_fork(t_com *elem, char **env);
 void			ft_builtin_cd(t_com *input, char ***env);
 int				ft_fetch_oldpwd(t_com *input, char **env);
 void			ft_move_to_home(char ***env);
-void			ft_display_cd_err(char **pwd);
+void			ft_display_cd_err(char *pwd);
 
 /*
 **	Bluitin echo

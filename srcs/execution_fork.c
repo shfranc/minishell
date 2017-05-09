@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 14:23:39 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/08 16:56:33 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/09 11:04:28 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,13 @@ void	ft_execute_command(t_com *todo, char ***env)
 	temp = todo;
 	while (temp)
 	{
-		if (!ft_launch_builtin(temp, env))
+		if (ft_launch_builtin(temp, env))
+			;
+		else if (ft_launch_command(temp, *env))
 		{
-			if (ft_launch_command(temp, *env))
-			{
-				if (signal(SIGINT, ft_handler_child) == SIG_ERR)
-					ft_exit("minishell: unable to catch the signal", 1);
-				ft_fork(temp, *env);
-			}
+			if (signal(SIGINT, ft_handler_child) == SIG_ERR)
+				ft_exit("minishell: unable to catch the signal", 1);
+			ft_fork(temp, *env);
 		}
 		temp = temp->next;
 	}

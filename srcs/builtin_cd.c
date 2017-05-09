@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/03 16:06:02 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/08 17:23:40 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/09 11:12:52 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_builtin_cd(t_com *input, char ***env)
 	else
 	{
 		free(old_pwd);
-		ft_display_cd_err(&*(input->command + 1));
+		ft_display_cd_err(*(input->command + 1));
 	}
 }
 
@@ -76,36 +76,34 @@ void	ft_move_to_home(char ***env)
 		else
 		{
 			free(old_pwd);
-			ft_display_cd_err(&pwd);
+			ft_display_cd_err(pwd);
+			free(pwd);
 		}
 	}
 	else
 		ft_putendl_fd("minishell: cd: HOME not set", 2);
 }
 
-void	ft_display_cd_err(char **pwd)
+void	ft_display_cd_err(char *pwd)
 {
 	struct stat	pwd_stat;
 
-	if ((stat(*pwd, &pwd_stat)) == -1)
+	if ((stat(pwd, &pwd_stat)) == -1)
 	{
 		ft_putstr_fd("minishell: cd: ", 2);
-		ft_putstr_fd(*pwd, 2);
+		ft_putstr_fd(pwd, 2);
 		ft_putendl_fd(": No such file or directory", 2);
 	}
 	else if (!S_ISDIR(pwd_stat.st_mode))
 	{
 		ft_putstr_fd("minishell: cd: ", 2);
-		ft_putstr_fd(*pwd, 2);
+		ft_putstr_fd(pwd, 2);
 		ft_putendl_fd(": Not a directory", 2);
 	}
-	else
-	// else if ((pwd_stat.st_mode & S_IXUSR) != S_IXUSR)
+	else if (access(pwd, X_OK) == -1)
 	{
-		ft_putendl("-- 3 ");
 		ft_putstr_fd("minishell: cd: ", 2);
-		ft_putstr_fd(*pwd, 2);
+		ft_putstr_fd(pwd, 2);
 		ft_putendl_fd(": Permission denied", 2);
 	}
-	ft_strdel(pwd);
 }
