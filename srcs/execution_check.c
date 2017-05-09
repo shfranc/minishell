@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/27 10:41:23 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/09 12:41:24 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/09 12:48:57 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ void	ft_search_through_path(t_com *input, char **path, char **error)
 				break ;
 			}
 		}
-
 		free(test);
 		++i;
 	}
