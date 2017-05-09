@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/24 09:32:52 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/08 11:09:44 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/09 16:07:03 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,13 @@ void	ft_builtin_unsetenv(t_com *input, char ***env)
 	*(new + len) = 0;
 	i = 0;
 	j = 0;
-	while (*(*env + j) && i < len)
+	while (*(*env + j))
 	{
 		if (ft_check_var_suppr(input, *(*env + j)))
 			free(*(*env + j++));
-		else
+		else if (i < len)
 			*(new + i++) = *(*env + j++);
 	}
-	if (*(*env + j) && !ft_strequ(*(new + i), *(*env + j)))
-		free(*(*env + j));
 	old = *env;
 	*env = new;
 	free(old);
