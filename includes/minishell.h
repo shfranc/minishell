@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 10:07:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/09 11:26:16 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/10 15:43:59 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define EXIT		1 << 3
 # define SETENV 	1 << 4
 # define UNSETENV	1 << 5
+# define PRINTENV	1 << 6
 
 typedef struct	s_command
 {
@@ -103,6 +104,7 @@ void			ft_builtin_env(t_com *vinput, char ***env);
 char			*ft_get_env_variable(char **env, char *var);
 void			ft_change_pwd(char **pwd, char ***env);
 void			ft_change_oldpwd(char **old_pwd, char ***env);
+void			ft_builtin_printenv(t_com *input, char ***env);
 /*
 **	Bluitin exit
 */

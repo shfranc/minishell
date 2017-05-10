@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 11:55:08 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/09 12:38:10 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/10 15:45:38 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,18 @@ void	ft_change_oldpwd(char **old_pwd, char ***env)
 		ft_addtotab(env, temp);
 	free(temp);
 	ft_strdel(old_pwd);
+}
+
+void	ft_builtin_printenv(t_com *input, char ***env)
+{
+	char *temp;
+
+	temp = NULL;
+	if (!*(input->command + 1))
+		ft_puttab(*env);
+	else if (!(temp = ft_get_env_variable(*env, *(input->command + 1))))
+	{
+		ft_putendl(temp + 1);
+		free(temp);
+	}
 }

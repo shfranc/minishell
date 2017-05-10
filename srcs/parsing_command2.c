@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 19:23:38 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/08 10:59:10 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/10 15:42:26 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ void	ft_is_builtin(t_com *elem)
 	int		i;
 	char	*test;
 
-	test = ft_strdup("cd echo env exit setenv unsetenv");
+	test = ft_strdup("cd echo env exit setenv unsetenv printenv");
 	builtin = ft_strsplit(test, ' ');
 	free(test);
 	i = 0;
-	while (i < 6)
+	while (i < 7)
 	{
 		if (ft_strequ(elem->path, *(builtin + i)))
 			elem->builtin = 1 << i;

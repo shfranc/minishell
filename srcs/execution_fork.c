@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 14:23:39 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/09 11:04:28 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/10 15:42:53 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,14 @@ int		ft_launch_builtin(t_com *todo, char ***env)
 {
 	int status;
 
-	status = 6;
+	status = 7;
 	todo->builtin == CD ? ft_builtin_cd(todo, env) : status--;
 	todo->builtin == ECHO ? ft_builtin_echo(todo) : status--;
 	todo->builtin == ENV ? ft_builtin_env(todo, env) : status--;
 	todo->builtin == EXIT ? ft_builtin_exit(todo) : status--;
 	todo->builtin == SETENV ? ft_builtin_setenv(todo, env) : status--;
 	todo->builtin == UNSETENV ? ft_builtin_unsetenv(todo, env) : status--;
+	todo->builtin == UNSETENV ? ft_builtin_printenv(todo, env) : status--;
 	return (status);
 }
 
