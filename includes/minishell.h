@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 10:07:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/10 15:43:59 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/10 18:29:52 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,10 @@ int				ft_modify_variable(char ***env, char *new_var);
 **	Bluitin unsetenv
 */
 void			ft_builtin_unsetenv(t_com *input, char ***env);
-int				ft_count_var_suppr(t_com *input, char ***env);
-int				ft_check_var_suppr(t_com *input, char *env);
+int				ft_exist_inenv(char **env, char *var);
+// int				ft_count_var_suppr(t_com *input, char ***env);
+int		ft_check_var_suppr(char *input, char *env);
+// int				ft_check_var_suppr(t_com *input, char *env);
 
 /*
 **	Lists minishell
