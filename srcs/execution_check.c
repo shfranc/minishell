@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/27 10:41:23 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/09 12:51:46 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/12 18:59:21 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,22 +99,12 @@ char	**ft_get_path_variable(char **env)
 {
 	char	**path;
 	char	*temp;
-	char	*find;
-	int		i;
 
-	i = 0;
-	while (*(env + i))
-	{
-		if ((find = ft_strstr(*(env + i), "PATH=")))
-		{
-			temp = ft_strsub(find, 5, ft_strlen(find + 5));
-			path = ft_strsplit(temp, ':');
-			free(temp);
-			return (path);
-		}
-		i++;
-	}
-	return (NULL);
+	if (!(temp = ft_get_env_variable(env, "PATH")))
+		return (NULL);
+	path = ft_strsplit(temp, ':');
+	free(temp);
+	return (path);
 }
 
 int		ft_display_cmd_err(t_com *input, char *error)
