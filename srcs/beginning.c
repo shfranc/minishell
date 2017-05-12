@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/03 18:13:20 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/12 12:49:01 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/12 18:09:44 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,14 @@ void	ft_display_prompt(void)
 	user = NULL;
 	cwd = NULL;
 	ft_putstr(BCYAN);
-	if ((user = getlogin()))
+	if ((user = ft_get_user()))
 	{
 		ft_putstr(user);
 		ft_putstr(": ");
 	}
 	else
 		ft_putstr("minishell: ");
+	free(user);
 	ft_putstr(RESET);
 	ft_putstr(BBLUE);
 	if ((cwd = getcwd(NULL, 0)))
@@ -82,4 +83,13 @@ void	ft_display_prompt(void)
 	free(cwd);
 	ft_putstr(RESET);
 	ft_putstr(" $> ");
+}
+
+char	*ft_get_user(void)
+{
+	struct passwd *ret_pwd;
+
+	if (!(ret_pwd = getpwuid(getuid())))
+		return (NULL);
+	return (ft_strdup(ret_pwd->pw_name));
 }

@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 10:07:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/12 12:27:13 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/12 18:09:21 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 # include <signal.h>
 # include <sys/stat.h>
 # include <sys/ioctl.h>
+# include <sys/types.h>
+# include <pwd.h>
+# include <uuid/uuid.h>
 
 # define CD			1
 # define ECHO		1 << 1
@@ -41,6 +44,7 @@ typedef struct	s_command
 void			ft_increase_shlvl(char ***env);
 void			ft_update_pwd(char ***env);
 void			ft_display_prompt(void);
+char			*ft_get_user(void);
 
 /*
 **	Read user input
