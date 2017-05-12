@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/27 10:41:23 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/12 18:59:21 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/12 23:56:05 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,9 @@ void	ft_search_through_path(t_com *input, char **path, char **error)
 	int			ret;
 	int			i;
 
-	i = 0;
-	while (*(path + i))
+	i = -1;
+	ret = -1;
+	while (*(path + ++i))
 	{
 		test = ft_strjoin3(*(path + i), "/", input->path);
 		if ((ret = stat(test, &tmp_stat)) != -1)
@@ -90,7 +91,6 @@ void	ft_search_through_path(t_com *input, char **path, char **error)
 			}
 		}
 		free(test);
-		++i;
 	}
 	ret == -1 && !*error ? *error = ft_strdup(": command not found") : 0;
 }
