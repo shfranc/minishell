@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/03 18:13:20 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/08 11:10:31 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/12 12:49:01 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_increase_shlvl(char ***env)
 	char	*newlvl;
 	int		lvl;
 
-	if ((shlvl = ft_get_env_variable(*env, "SHLVL=")))
+	if ((shlvl = ft_get_env_variable(*env, "SHLVL")))
 	{
 		lvl = ft_atoi(shlvl) + 1;
 		newlvl = ft_itoa(lvl);
@@ -42,7 +42,7 @@ void	ft_update_pwd(char ***env)
 
 	if (!(cwd = getcwd(NULL, 0)))
 		return ;
-	if ((pwd = ft_get_env_variable(*env, "PWD=")))
+	if ((pwd = ft_get_env_variable(*env, "PWD")))
 	{
 		temp = cwd;
 		cwd = ft_strjoin("PWD=", cwd);

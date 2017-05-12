@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 14:23:39 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/10 17:29:16 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/12 14:13:41 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	ft_execute_command(t_com *todo, char ***env)
 			;
 		else if (ft_launch_command(temp, *env))
 		{
-			// if (signal(SIGINT, ft_handler_child) == SIG_ERR)
-				// ft_exit("minishell: unable to catch the signal", 1);
+			if (signal(SIGINT, ft_handler_child) == SIG_ERR)
+				ft_exit("minishell: unable to catch the signal", 1);
 			ft_fork(temp, *env);
 		}
 		temp = temp->next;
@@ -42,7 +42,7 @@ int		ft_launch_builtin(t_com *todo, char ***env)
 	todo->builtin == EXIT ? ft_builtin_exit(todo) : status--;
 	todo->builtin == SETENV ? ft_builtin_setenv(todo, env) : status--;
 	todo->builtin == UNSETENV ? ft_builtin_unsetenv(todo, env) : status--;
-	todo->builtin == UNSETENV ? ft_builtin_printenv(todo, env) : status--;
+	todo->builtin == PRINTENV ? ft_builtin_printenv(todo, env) : status--;
 	return (status);
 }
 

@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 09:55:07 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/10 17:29:17 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/12 14:14:51 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ int		main(int ac, char **av, char **environ)
 	ft_increase_shlvl(&env);
 	while (1)
 	{
-		// if (signal(SIGINT, ft_handler_father) == SIG_ERR)
-			// ft_exit("minishell: unable to catch the signal", 1);
+		if (signal(SIGINT, ft_handler_father) == SIG_ERR)
+			ft_exit("minishell: unable to catch the signal", 1);
 		ft_display_prompt();
 		if (get_next_line(0, &line) != 1)
 			ft_exit("exit", 0);

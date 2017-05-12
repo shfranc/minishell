@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 11:55:08 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/10 15:45:38 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/12 14:13:19 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,24 @@ void	ft_builtin_env(t_com *input, char ***env)
 
 char	*ft_get_env_variable(char **env, char *var)
 {
-	char	*find;
+	char	*temp;
+	char	*stop;
 	int		i;
 
 	i = 0;
 	while (*(env + i))
 	{
-		if ((find = ft_strstr(*(env + i), var)))
+		temp = ft_strsub(*(env + i), 0,\
+			ft_strchr(*(env + i), '=') - *(env + i));
+		if (ft_strequ(temp, var))
 		{
-			return (ft_strsub(find, ft_strlen(var),\
-				ft_strlen(find + ft_strlen(var))));
+			stop = ft_strchr(*(env + i), '=');
+			free(temp);
+			return (ft_strsub(*(env + i), stop - *(env + i) + 1,\
+				ft_strlen(stop)));
 		}
 		i++;
+		free(temp);
 	}
 	return (NULL);
 }
@@ -65,9 +71,9 @@ void	ft_builtin_printenv(t_com *input, char ***env)
 	temp = NULL;
 	if (!*(input->command + 1))
 		ft_puttab(*env);
-	else if (!(temp = ft_get_env_variable(*env, *(input->command + 1))))
+	else if ((temp = ft_get_env_variable(*env, *(input->command + 1))))
 	{
-		ft_putendl(temp + 1);
+		ft_putendl(temp);
 		free(temp);
 	}
 }

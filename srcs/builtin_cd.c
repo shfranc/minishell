@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/03 16:06:02 by sfranc            #+#    #+#             */
-/*   Updated: 2017/05/09 16:43:43 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/05/12 12:49:58 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int		ft_fetch_oldpwd(t_com *input, char **env)
 	if (ft_strequ(*(input->command + 1), "-"))
 	{
 		free(*(input->command + 1));
-		*(input->command + 1) = ft_get_env_variable(env, "OLDPWD=");
+		*(input->command + 1) = ft_get_env_variable(env, "OLDPWD");
 		if (!*(input->command + 1))
 		{
 			ft_putendl_fd("minishell: cd: OLDPWD not set", 2);
@@ -66,7 +66,7 @@ void	ft_move_to_home(char ***env)
 	char		*old_pwd;
 	char		*pwd;
 
-	if ((pwd = ft_get_env_variable(*env, "HOME=")))
+	if ((pwd = ft_get_env_variable(*env, "HOME")))
 	{
 		if (!(old_pwd = getcwd(NULL, 0)))
 			;
