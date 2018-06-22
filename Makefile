@@ -6,7 +6,7 @@
 #    By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 13:03:38 by sfranc            #+#    #+#              #
-#    Updated: 2017/05/05 12:25:40 by sfranc           ###   ########.fr        #
+#    Updated: 2018/06/22 18:38:41 by sfranc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ $(LIB):
 	@echo "$(GREEN)libft : compilation OK$(RESET)"
 
 $(OBJS_PATH)/%.o: $(SRCS_PATH)/%.c $(INCLUDES)
+	@mkdir -p $(OBJS_PATH)
 	@$(CC) $(FLAGS) -o $@ -c $< $(addprefix -I , $(INCLUDES))
 	@echo "$@ : $(YELLOW)OK$(RESET)"
 
